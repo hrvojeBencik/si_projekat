@@ -8,7 +8,7 @@ class UserRepository {
 
   UserRepository({FirebaseAuth? firebaseAuth}) {
     _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
-    _firebaseAuth.setPersistence(Persistence.SESSION);
+    _firebaseAuth.setPersistence(Persistence.LOCAL);
   }
 
   Future<UserCredential> signInWithCredentials(
