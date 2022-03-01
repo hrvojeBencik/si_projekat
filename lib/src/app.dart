@@ -69,6 +69,7 @@ class MyApp extends StatelessWidget {
                   return LandingPage();
                 },
               ),
+              initialRoute: '/',
               onGenerateRoute: (RouteSettings routeSettings) {
                 return MaterialPageRoute<void>(
                   settings: routeSettings,

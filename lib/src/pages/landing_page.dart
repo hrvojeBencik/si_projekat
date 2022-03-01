@@ -33,7 +33,7 @@ class LandingPage extends StatelessWidget {
               TextField(
                 controller: _passwordController,
                 decoration: const InputDecoration(
-                  hintText: 'Password',
+                  hintText: 'Lozinka',
                 ),
               ),
               const SizedBox(height: 20),
@@ -45,14 +45,14 @@ class LandingPage extends StatelessWidget {
                       context.read<AuthenticationBloc>().add(RegisterEvent(
                           _emailController.text, _passwordController.text));
                     },
-                    child: const Text('Register'),
+                    child: const Text('Registrujte se'),
                   ),
                   ElevatedButton(
                     onPressed: () async {
                       context.read<AuthenticationBloc>().add(SignInEvent(
                           _emailController.text, _passwordController.text));
                     },
-                    child: const Text('Sign In'),
+                    child: const Text('Ulogujte se'),
                   ),
                 ],
               ),
