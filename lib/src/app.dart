@@ -9,6 +9,7 @@ import 'package:si_app/src/pages/landing_page.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 import 'package:si_app/src/services/settings/settings_controller.dart';
 import 'package:si_app/src/services/settings/settings_screen.dart';
+import 'package:si_app/src/utils/custom_toast.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
