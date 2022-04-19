@@ -15,4 +15,16 @@ class AuthenticatedState extends AuthenticationState {
   final String email;
 
   const AuthenticatedState(this.email);
+
+  @override
+  List<Object> get props => [email];
+}
+
+class AuthenticationErrorState extends AuthenticationState {
+  final String errorMessage;
+
+  const AuthenticationErrorState(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
 }

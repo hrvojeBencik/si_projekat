@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:si_app/src/models/exceptions/firebase_auth_exception.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
-import 'package:si_app/src/utils/custom_toast.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -37,7 +36,8 @@ class AuthenticationBloc
       } on FirebaseAuthException catch (e) {
         final AuthException authException = AuthException(code: e.code);
         emit(UnauthenticatedState());
-        CustomToast.showErrorToast(authException.message);
+
+        emit(AuthenticationErrorState(authException.message));
       } catch (e) {
         emit(UnauthenticatedState());
       }
@@ -50,9 +50,10 @@ class AuthenticationBloc
 
         emit(AuthenticatedState(userCredential.user!.email!));
       } on FirebaseAuthException catch (e) {
-        emit(UnauthenticatedState());
         final AuthException authException = AuthException(code: e.code);
-        CustomToast.showErrorToast(authException.message);
+        emit(UnauthenticatedState());
+
+        emit(AuthenticationErrorState(authException.message));
       } catch (e) {
         emit(UnauthenticatedState());
       }
@@ -61,6 +62,10 @@ class AuthenticationBloc
     on<SignOutEvent>((event, emit) async {
       await userRepository.signOut();
 
+      emit(UnauthenticatedState());
+    });
+
+    on<SwitchAuthFormEvent>((event, emit) {
       emit(UnauthenticatedState());
     });
   }

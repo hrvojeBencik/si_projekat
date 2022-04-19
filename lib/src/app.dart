@@ -5,11 +5,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
 import 'package:si_app/src/constants/routes.dart';
 import 'package:si_app/src/pages/home_page.dart';
-import 'package:si_app/src/pages/landing_page.dart';
+import 'package:si_app/src/pages/landing_page/landing_page.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 import 'package:si_app/src/services/settings/settings_controller.dart';
 import 'package:si_app/src/services/settings/settings_screen.dart';
-import 'package:si_app/src/utils/custom_toast.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -44,7 +43,9 @@ class MyApp extends StatelessWidget {
               ],
               supportedLocales: const [
                 Locale('en', ''),
+                Locale('sr', ''),
               ],
+              locale: const Locale.fromSubtags(languageCode: 'sr'),
               onGenerateTitle: (BuildContext context) =>
                   AppLocalizations.of(context)!.appTitle,
               theme: ThemeData(),
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
                 bloc: context.read<AuthenticationBloc>(),
                 builder: (context, state) {
                   if (state is UnauthenticatedState) {
-                    return LandingPage();
+                    return const LandingPage();
                   }
 
                   if (state is AuthenticatedState) {
@@ -67,9 +68,10 @@ class MyApp extends StatelessWidget {
                     );
                   }
 
-                  return LandingPage();
+                  return const LandingPage();
                 },
               ),
+              initialRoute: '/',
               onGenerateRoute: (RouteSettings routeSettings) {
                 return MaterialPageRoute<void>(
                   settings: routeSettings,
