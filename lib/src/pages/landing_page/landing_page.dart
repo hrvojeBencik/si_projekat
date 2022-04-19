@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
 import 'package:si_app/src/pages/landing_page/login_form.dart';
 import 'package:si_app/src/pages/landing_page/register_form.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -59,7 +60,9 @@ class _LandingPageState extends State<LandingPage> {
                         _isLoginSelected = false;
                       });
                     },
-                    child: const Text('Kreirajte nalog'),
+                    child: Text(
+                      AppLocalizations.of(context)!.register,
+                    ),
                   ),
                 ],
               )
@@ -74,7 +77,9 @@ class _LandingPageState extends State<LandingPage> {
                         _isLoginSelected = true;
                       });
                     },
-                    child: const Text('Ulogujte se'),
+                    child: Text(
+                      (AppLocalizations.of(context)!.signIn),
+                    ),
                   ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterForm extends StatelessWidget {
   RegisterForm({Key? key, this.errorMessage}) : super(key: key);
@@ -17,23 +18,23 @@ class RegisterForm extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Register',
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.registerHeader,
+              style: const TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
               ),
             ),
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(
-                hintText: 'Email',
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.email,
               ),
             ),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
-                hintText: 'Lozinka',
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.password,
               ),
             ),
             if (errorMessage != null)
@@ -46,10 +47,14 @@ class RegisterForm extends StatelessWidget {
               onPressed: () async {
                 context.read<AuthenticationBloc>().add(
                       RegisterEvent(
-                          _emailController.text, _passwordController.text),
+                        _emailController.text,
+                        _passwordController.text,
+                      ),
                     );
               },
-              child: const Text('Registrujte se'),
+              child: Text(
+                AppLocalizations.of(context)!.register,
+              ),
             ),
           ],
         ),
