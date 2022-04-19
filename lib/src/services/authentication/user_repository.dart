@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:si_app/src/models/user.dart' as userModel;
 
 class UserRepository {
+  userModel.User? currentUser;
   late final FirebaseAuth _firebaseAuth;
 
   UserRepository({FirebaseAuth? firebaseAuth}) {

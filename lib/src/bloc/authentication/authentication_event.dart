@@ -14,6 +14,9 @@ class RegisterEvent extends AuthenticationEvent {
   final String password;
 
   const RegisterEvent(this.email, this.password);
+
+  @override
+  List<Object> get props => [email, password];
 }
 
 class SignInEvent extends AuthenticationEvent {
@@ -21,6 +24,11 @@ class SignInEvent extends AuthenticationEvent {
   final String password;
 
   const SignInEvent(this.email, this.password);
+
+  @override
+  List<Object> get props => [email, password];
 }
 
 class SignOutEvent extends AuthenticationEvent {}
+
+class SwitchAuthFormEvent extends AuthenticationEvent {}

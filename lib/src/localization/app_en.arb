@@ -1,6 +1,9 @@
 {
-  "appTitle": "si_app",
-  "@appTitle": {
-    "description": "The title of the application"
-  }
+    "appTitle": "Fructify",
+    "register": "Register",
+    "registerHeader": "Fructify Register",
+    "loginHeader": "Fructify login",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In"
 }
