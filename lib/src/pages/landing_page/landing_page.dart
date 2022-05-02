@@ -120,9 +120,13 @@ class _LandingPageState extends State<LandingPage> {
         Expanded(
           flex: 1,
           child: Container(
+            alignment: Alignment.bottomCenter,
+            padding: const EdgeInsets.only(bottom: 5),
             width: double.infinity,
             color: FructifyColors.white,
-            // child: footer
+            child: Text(
+              AppLocalizations.of(context)!.legalRights,
+            ),
           ),
         ),
       ],
