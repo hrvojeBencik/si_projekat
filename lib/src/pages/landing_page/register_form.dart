@@ -4,6 +4,8 @@ import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
+import 'package:si_app/src/models/user.dart';
+import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/widgets/fructify_button.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -129,6 +131,7 @@ class _RegisterFormState extends State<RegisterForm> {
               onClick: !_formValidator()
                   ? null
                   : () async {
+                      postUserToDB();
                       context.read<AuthenticationBloc>().add(
                             RegisterEvent(
                               _emailController.text,
@@ -141,6 +144,18 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
       ),
     );
+  }
+
+  void postUserToDB() {
+    final user = User(
+      id: 'firebase_id',
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      email: _emailController.text,
+      image: 'image',
+    );
+
+    ApiService().addUser(user);
   }
 
   bool _formValidator() {
