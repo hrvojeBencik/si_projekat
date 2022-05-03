@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 fontFamily: GoogleFonts.montserrat().fontFamily,
               ),
-              darkTheme: ThemeData.dark(),
+              // darkTheme: ThemeData.dark(),
               themeMode: settingsController.themeMode,
               home: BlocBuilder(
                 bloc: context.read<AuthenticationBloc>(),

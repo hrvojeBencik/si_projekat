@@ -49,44 +49,46 @@ class _LandingPageState extends State<LandingPage> {
       children: [
         _authScreenBackground(),
         Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (_isLoginSelected)
-                Column(
-                  children: [
-                    LoginForm(errorMessage: errorMessage),
-                    TextButton(
-                      onPressed: () {
-                        _authBloc.add(SwitchAuthFormEvent());
-                        setState(() {
-                          _isLoginSelected = false;
-                        });
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!.register,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_isLoginSelected)
+                  Column(
+                    children: [
+                      LoginForm(errorMessage: errorMessage),
+                      TextButton(
+                        onPressed: () {
+                          _authBloc.add(SwitchAuthFormEvent());
+                          setState(() {
+                            _isLoginSelected = false;
+                          });
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.register,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              else
-                Column(
-                  children: [
-                    RegisterForm(errorMessage: errorMessage),
-                    TextButton(
-                      onPressed: () {
-                        _authBloc.add(SwitchAuthFormEvent());
-                        setState(() {
-                          _isLoginSelected = true;
-                        });
-                      },
-                      child: Text(
-                        (AppLocalizations.of(context)!.signIn),
+                    ],
+                  )
+                else
+                  Column(
+                    children: [
+                      RegisterForm(errorMessage: errorMessage),
+                      TextButton(
+                        onPressed: () {
+                          _authBloc.add(SwitchAuthFormEvent());
+                          setState(() {
+                            _isLoginSelected = true;
+                          });
+                        },
+                        child: Text(
+                          (AppLocalizations.of(context)!.signIn),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-            ],
+                    ],
+                  ),
+              ],
+            ),
           ),
         ),
       ],
