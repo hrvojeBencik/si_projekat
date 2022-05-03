@@ -9,7 +9,7 @@ import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/widgets/fructify_button.dart';
 
 class RegisterForm extends StatefulWidget {
-  RegisterForm({Key? key, this.errorMessage}) : super(key: key);
+  const RegisterForm({Key? key, this.errorMessage}) : super(key: key);
 
   final String? errorMessage;
 
@@ -22,8 +22,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   bool _isTermsChecked = false;
 
@@ -39,11 +38,18 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth <= 1000) return _mobileLayout(context, constraints.maxWidth);
+      return _desktopLayout(context, constraints.maxWidth);
+    });
+  }
+
+  Widget _desktopLayout(BuildContext context, double screenWidth) {
     return Center(
       child: Container(
-        width: 1200,
-        margin: const EdgeInsets.symmetric(
-          horizontal: 130,
+        width: screenWidth * 0.8,
+        margin: const EdgeInsets.only(
+          top: 100,
         ),
         padding: const EdgeInsets.symmetric(
           horizontal: 30,
@@ -146,6 +152,111 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
+  Widget _mobileLayout(BuildContext context, double screenWidth) {
+    return Center(
+      child: Container(
+        width: screenWidth,
+        margin: const EdgeInsets.only(
+          top: 100,
+          left: 10,
+          right: 10,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 30,
+          vertical: 30,
+        ),
+        decoration: BoxDecoration(
+          color: FructifyColors.white,
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(15, 15),
+              blurRadius: 4,
+              color: FructifyColors.black.withOpacity(0.25),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Text(
+              AppLocalizations.of(context)!.createAccount,
+              style: FructifyStyles.textStyle.headerStyle1,
+              textAlign: TextAlign.center,
+            ),
+            _showErrorMessage(),
+            const SizedBox(height: 20),
+            Column(
+              children: [
+                Column(
+                  children: [
+                    _inputField(
+                      _firstNameController,
+                      AppLocalizations.of(context)!.firstName,
+                    ),
+                    _inputField(
+                      _lastNameController,
+                      AppLocalizations.of(context)!.lastName,
+                    ),
+                    _inputField(
+                      _emailController,
+                      AppLocalizations.of(context)!.email,
+                    ),
+                    _inputField(
+                      _passwordController,
+                      AppLocalizations.of(context)!.password,
+                      isPassword: true,
+                    ),
+                    _inputField(
+                      _confirmPasswordController,
+                      AppLocalizations.of(context)!.confirmPassword,
+                      isPassword: true,
+                    ),
+                  ],
+                ),
+                Image.asset(
+                  'assets/images/register.png',
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Checkbox(
+                  value: _isTermsChecked,
+                  onChanged: (value) => setState(
+                    () => _isTermsChecked = value!,
+                  ),
+                  fillColor: MaterialStateProperty.all<Color>(
+                    FructifyColors.lightGreen,
+                  ),
+                ),
+                Text(
+                  AppLocalizations.of(context)!.acceptTerms,
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            FructifyButton(
+              text: AppLocalizations.of(context)!.register,
+              onClick: !_formValidator()
+                  ? null
+                  : () async {
+                      postUserToDB();
+                      context.read<AuthenticationBloc>().add(
+                            RegisterEvent(
+                              _emailController.text,
+                              _passwordController.text,
+                            ),
+                          );
+                    },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   void postUserToDB() {
     final user = User(
       id: 'firebase_id',
@@ -160,11 +271,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
   bool _formValidator() {
     if (!_isTermsChecked) return false;
-    if (_firstNameController.text.isEmpty ||
-        _lastNameController.text.isEmpty ||
-        _emailController.text.isEmpty ||
-        _passwordController.text.isEmpty ||
-        _confirmPasswordController.text.isEmpty) return false;
+    if (_firstNameController.text.isEmpty || _lastNameController.text.isEmpty || _emailController.text.isEmpty || _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty)
+      return false;
 
     return true;
   }
@@ -180,8 +288,7 @@ class _RegisterFormState extends State<RegisterForm> {
     return Container();
   }
 
-  Widget _inputField(TextEditingController controller, String hintText,
-      {bool isPassword = false}) {
+  Widget _inputField(TextEditingController controller, String hintText, {bool isPassword = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 16, left: 42, right: 42),
       child: TextField(
