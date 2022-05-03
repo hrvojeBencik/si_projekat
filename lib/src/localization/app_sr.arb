@@ -1,9 +1,18 @@
 {
     "appTitle": "Fructify",
-    "register": "Registrujte se",
+    "register": "Registruj se",
     "registerHeader": "Fructify Registracija",
-    "loginHeader": "Fructify Prijava",
+    "loginHeader": "Moj Fructify\nnalog",
     "email": "Email",
     "password": "Lozinka",
-    "signIn": "Prijavite se"
+    "signIn": "Prijavi se",
+    "legalRights": "\u00a9 Fructify | Sva prava zadržana",
+    "dontHaveAccount": "Nemaš nalog?",
+    "alreadyHaveAccount": "Već imaš nalog?",
+    "createAccountEasily": "Registruj se lako",
+    "createAccount": "Kreiraj svoj Fructify nalog",
+    "firstName": "Ime",
+    "lastName": "Prezime",
+    "confirmPassword": "Potvrdi lozinku",
+    "acceptTerms": "Pročitao/la sam i prihvatam uslove korišćenja"
 }
