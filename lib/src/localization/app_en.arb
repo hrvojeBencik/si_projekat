@@ -5,5 +5,14 @@
     "loginHeader": "Fructify login",
     "email": "Email",
     "password": "Password",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "legalRights": "\u00a9 Fructify | Sva prava zadržana",
+    "dontHaveAccount": "Nemaš nalog?",
+    "alreadyHaveAccount": "Već imaš nalog?",
+    "createAccountEasily": "Registruj se lako",
+    "createAccount": "Kreiraj svoj Fructify nalog",
+    "firstName": "Ime",
+    "lastName": "Prezime",
+    "confirmPassword": "Potvrdite lozinku",
+    "acceptTerms": "Pročitao/la sam i prihvatam uslove korišćenja"
 }

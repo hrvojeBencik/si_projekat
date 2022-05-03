@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:si_app/src/models/user.dart' as user_model;
 
 class UserRepository {
+  user_model.User? currentUser;
   late final FirebaseAuth _firebaseAuth;
 
   UserRepository({FirebaseAuth? firebaseAuth}) {
@@ -8,16 +10,14 @@ class UserRepository {
     _firebaseAuth.setPersistence(Persistence.LOCAL);
   }
 
-  Future<UserCredential> signInWithCredentials(
-      String email, String password) async {
+  Future<UserCredential> signInWithCredentials(String email, String password) async {
     return await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
   }
 
-  Future<UserCredential> signUp(
-      {required String email, required String password}) async {
+  Future<UserCredential> signUp({required String email, required String password}) async {
     return await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
