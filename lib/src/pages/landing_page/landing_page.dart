@@ -44,6 +44,13 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
+  void switchForm({bool selectLogin = true}) {
+    _authBloc.add(SwitchAuthFormEvent());
+    setState(() {
+      _isLoginSelected = selectLogin;
+    });
+  }
+
   Widget _authForm(String? errorMessage) {
     return Stack(
       children: [
@@ -53,40 +60,7 @@ class _LandingPageState extends State<LandingPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (_isLoginSelected)
-                  Column(
-                    children: [
-                      LoginForm(errorMessage: errorMessage),
-                      TextButton(
-                        onPressed: () {
-                          _authBloc.add(SwitchAuthFormEvent());
-                          setState(() {
-                            _isLoginSelected = false;
-                          });
-                        },
-                        child: Text(
-                          AppLocalizations.of(context)!.register,
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  Column(
-                    children: [
-                      RegisterForm(errorMessage: errorMessage),
-                      TextButton(
-                        onPressed: () {
-                          _authBloc.add(SwitchAuthFormEvent());
-                          setState(() {
-                            _isLoginSelected = true;
-                          });
-                        },
-                        child: Text(
-                          (AppLocalizations.of(context)!.signIn),
-                        ),
-                      ),
-                    ],
-                  ),
+                if (_isLoginSelected) LoginForm(errorMessage: errorMessage, switchForm: switchForm) else RegisterForm(errorMessage: errorMessage, switchForm: switchForm),
               ],
             ),
           ),

@@ -1,1 +1,1 @@
-const String base_url = 'https://si-projekat-vtsns.herokuapp.com/';
+const String baseUrl = 'https://si-projekat-vtsns.herokuapp.com/';

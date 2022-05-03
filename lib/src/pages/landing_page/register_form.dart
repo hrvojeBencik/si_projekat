@@ -9,9 +9,10 @@ import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/widgets/fructify_button.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key, this.errorMessage}) : super(key: key);
+  const RegisterForm({Key? key, this.errorMessage, required this.switchForm}) : super(key: key);
 
   final String? errorMessage;
+  final Function({bool selectLogin}) switchForm;
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -107,8 +108,26 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Image.asset(
-                    'assets/images/register.png',
+                  child: Column(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.alreadyHaveAccount,
+                        style: FructifyStyles.textStyle.headerStyle1.copyWith(
+                          color: FructifyColors.darkGreen,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      FructifyButton(
+                        onClick: () {
+                          widget.switchForm(selectLogin: true);
+                        },
+                        text: AppLocalizations.of(context)!.signIn,
+                      ),
+                      Image.asset(
+                        'assets/images/register.png',
+                        height: 200,
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -213,8 +232,10 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 30),
                 Image.asset(
                   'assets/images/register.png',
+                  height: 200,
                 ),
               ],
             ),
@@ -250,7 +271,21 @@ class _RegisterFormState extends State<RegisterForm> {
                             ),
                           );
                     },
-            )
+            ),
+            const SizedBox(height: 30),
+            Text(
+              AppLocalizations.of(context)!.alreadyHaveAccount,
+              style: FructifyStyles.textStyle.headerStyle1.copyWith(
+                color: FructifyColors.darkGreen,
+              ),
+            ),
+            const SizedBox(height: 30),
+            FructifyButton(
+              onClick: () {
+                widget.switchForm(selectLogin: true);
+              },
+              text: AppLocalizations.of(context)!.signIn,
+            ),
           ],
         ),
       ),
@@ -271,8 +306,9 @@ class _RegisterFormState extends State<RegisterForm> {
 
   bool _formValidator() {
     if (!_isTermsChecked) return false;
-    if (_firstNameController.text.isEmpty || _lastNameController.text.isEmpty || _emailController.text.isEmpty || _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty)
+    if (_firstNameController.text.isEmpty || _lastNameController.text.isEmpty || _emailController.text.isEmpty || _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty) {
       return false;
+    }
 
     return true;
   }

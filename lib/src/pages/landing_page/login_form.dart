@@ -7,9 +7,10 @@ import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/widgets/fructify_button.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key, this.errorMessage}) : super(key: key);
+  const LoginForm({Key? key, this.errorMessage, required this.switchForm}) : super(key: key);
 
   final String? errorMessage;
+  final Function({bool selectLogin}) switchForm;
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -130,7 +131,9 @@ class _LoginFormState extends State<LoginForm> {
         ),
         const SizedBox(height: 30),
         FructifyButton(
-          onClick: () {},
+          onClick: () {
+            widget.switchForm(selectLogin: false);
+          },
           text: AppLocalizations.of(context)!.createAccountEasily,
         ),
         Image.asset(
