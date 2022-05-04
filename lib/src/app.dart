@@ -4,9 +4,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
+import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
 import 'package:si_app/src/constants/routes.dart';
 import 'package:si_app/src/pages/home_page.dart';
 import 'package:si_app/src/pages/landing_page/landing_page.dart';
+import 'package:si_app/src/pages/settings_page.dart';
 import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 import 'package:si_app/src/services/settings/settings_controller.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             )..add(CheckUserStatusEvent()),
           ),
+          BlocProvider<PlotsBloc>(create: (context) => PlotsBloc()),
         ],
         child: AnimatedBuilder(
           animation: settingsController,
@@ -86,7 +89,7 @@ class MyApp extends StatelessWidget {
                       case Routes.homeScreen:
                         return const HomePage();
                       case Routes.settingsScreen:
-                        return SettingsScreen(controller: settingsController);
+                        return SettingsPage();
                       default:
                         return const HomePage();
                     }

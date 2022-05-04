@@ -14,5 +14,12 @@
     "firstName": "Ime",
     "lastName": "Prezime",
     "confirmPassword": "Potvrdite lozinku",
-    "acceptTerms": "Pročitao/la sam i prihvatam uslove korišćenja"
+    "acceptTerms": "Pročitao/la sam i prihvatam uslove korišćenja",
+    "home": "Početna",
+    "settings": "Podešavanja",
+    "plotLoadingError": "Greška prilikom učitavanja parcela",
+    "noAddedPlots": "Nemaš unetih parcela",
+    "addPlot": "Dodaj parcelu",
+    "cancel": "Poništi",
+    "submit": "Potvrdi"
 }
