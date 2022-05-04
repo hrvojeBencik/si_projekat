@@ -7,6 +7,7 @@ import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
 import 'package:si_app/src/constants/routes.dart';
 import 'package:si_app/src/pages/home_page.dart';
 import 'package:si_app/src/pages/landing_page/landing_page.dart';
+import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 import 'package:si_app/src/services/settings/settings_controller.dart';
 import 'package:si_app/src/services/settings/settings_screen.dart';
@@ -21,8 +22,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => UserRepository(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => UserRepository()),
+        RepositoryProvider(create: (context) => ApiService()),
+      ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthenticationBloc>(
@@ -47,8 +51,7 @@ class MyApp extends StatelessWidget {
                 Locale('sr', ''),
               ],
               locale: const Locale.fromSubtags(languageCode: 'sr'),
-              onGenerateTitle: (BuildContext context) =>
-                  AppLocalizations.of(context)!.appTitle,
+              onGenerateTitle: (BuildContext context) => AppLocalizations.of(context)!.appTitle,
               theme: ThemeData(
                 fontFamily: GoogleFonts.montserrat().fontFamily,
               ),

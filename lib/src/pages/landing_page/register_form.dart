@@ -156,7 +156,7 @@ class _RegisterFormState extends State<RegisterForm> {
               onClick: !_formValidator()
                   ? null
                   : () async {
-                      postUserToDB();
+                      await postUserToDB();
                       context.read<AuthenticationBloc>().add(
                             RegisterEvent(
                               _emailController.text,
@@ -263,7 +263,7 @@ class _RegisterFormState extends State<RegisterForm> {
               onClick: !_formValidator()
                   ? null
                   : () async {
-                      postUserToDB();
+                      await postUserToDB();
                       context.read<AuthenticationBloc>().add(
                             RegisterEvent(
                               _emailController.text,
@@ -292,7 +292,7 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  void postUserToDB() {
+  Future<void> postUserToDB() async {
     final user = User(
       id: 'firebase_id',
       firstName: _firstNameController.text,
