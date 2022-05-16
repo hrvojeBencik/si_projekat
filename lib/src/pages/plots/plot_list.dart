@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
 import 'package:si_app/src/models/plot.dart';
+import 'package:si_app/src/models/user.dart';
 import 'package:si_app/src/pages/plots/plot_tile.dart';
+import 'package:si_app/src/services/api_service.dart';
+import 'package:si_app/src/services/authentication/user_repository.dart';
 import 'package:si_app/src/widgets/fructify_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

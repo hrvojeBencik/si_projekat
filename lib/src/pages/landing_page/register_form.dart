@@ -155,12 +155,14 @@ class _RegisterFormState extends State<RegisterForm> {
               text: AppLocalizations.of(context)!.register,
               onClick: !_formValidator()
                   ? null
-                  : () async {
-                      await postUserToDB();
+                  : () {
                       context.read<AuthenticationBloc>().add(
                             RegisterEvent(
-                              _emailController.text,
-                              _passwordController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                              firstName: _firstNameController.text,
+                              lastName: _lastNameController.text,
+                              image: '',
                             ),
                           );
                     },
@@ -262,12 +264,14 @@ class _RegisterFormState extends State<RegisterForm> {
               text: AppLocalizations.of(context)!.register,
               onClick: !_formValidator()
                   ? null
-                  : () async {
-                      await postUserToDB();
+                  : () {
                       context.read<AuthenticationBloc>().add(
                             RegisterEvent(
-                              _emailController.text,
-                              _passwordController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                              firstName: _firstNameController.text,
+                              lastName: _lastNameController.text,
+                              image: '',
                             ),
                           );
                     },
@@ -290,18 +294,6 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
       ),
     );
-  }
-
-  Future<void> postUserToDB() async {
-    final user = User(
-      id: 'firebase_id',
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text,
-      email: _emailController.text,
-      image: 'image',
-    );
-
-    ApiService().addUser(user);
   }
 
   bool _formValidator() {

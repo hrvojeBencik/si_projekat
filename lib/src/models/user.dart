@@ -1,12 +1,14 @@
 class User {
-  final String id;
+  final String? id;
+  final String firebaseId;
   final String firstName;
   final String lastName;
   final String email;
   final String? image;
 
   User({
-    required this.id,
+    this.id,
+    required this.firebaseId,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -15,7 +17,8 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> data) {
     return User(
-      id: data['firebaseId'],
+      id: data['id'],
+      firebaseId: data['firebaseId'],
       firstName: data['firstName'],
       lastName: data['lastName'],
       email: data['email'],
@@ -25,7 +28,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
-      'firebaseId': id,
+      'firebaseId': firebaseId,
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
