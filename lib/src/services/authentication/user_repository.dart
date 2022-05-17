@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:si_app/src/models/user.dart' as user_model;
+import 'package:si_app/src/services/api_service.dart';
 
 class UserRepository {
   user_model.User? currentUser;
@@ -17,11 +18,23 @@ class UserRepository {
     );
   }
 
-  Future<UserCredential> signUp({required String email, required String password}) async {
-    return await _firebaseAuth.createUserWithEmailAndPassword(
+  Future<UserCredential> signUp({required String email, required String password, required String firstName, required String lastName, String image = ''}) async {
+    final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    final user_model.User user = user_model.User(
+      firebaseId: userCredential.user!.uid,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      image: image,
+    );
+
+    currentUser = await ApiService().addUser(user);
+
+    return userCredential;
   }
 
   Future<void> signOut() async {
@@ -29,17 +42,22 @@ class UserRepository {
   }
 
   Future<bool> isSignedIn() async {
-    User? currentUser = _firebaseAuth.currentUser;
-    currentUser ??= await FirebaseAuth.instance.authStateChanges().first;
-    return currentUser != null;
+    User? _currentUser = _firebaseAuth.currentUser;
+    _currentUser ??= await FirebaseAuth.instance.authStateChanges().first;
+    return _currentUser != null;
   }
 
   String? getUser() {
-    final currentUser = _firebaseAuth.currentUser;
-    if (currentUser != null) {
-      return currentUser.email;
+    final _currentUser = _firebaseAuth.currentUser;
+    if (_currentUser != null) {
+      ApiService().getUserByFirebaseId(_currentUser.uid).then((value) => currentUser = value);
+      return _currentUser.email;
     } else {
       return null;
     }
+  }
+
+  String getFirebaseId() {
+    return _firebaseAuth.currentUser!.uid;
   }
 }

@@ -7,11 +7,9 @@ import 'package:si_app/src/services/authentication/user_repository.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository userRepository;
-  AuthenticationBloc({required this.userRepository})
-      : super(UninitializedAuthenticationState()) {
+  AuthenticationBloc({required this.userRepository}) : super(UninitializedAuthenticationState()) {
     on<CheckUserStatusEvent>((event, emit) async {
       try {
         final isSignedIn = await userRepository.isSignedIn();
@@ -30,7 +28,12 @@ class AuthenticationBloc
     on<RegisterEvent>((event, emit) async {
       try {
         final UserCredential userCredential = await userRepository.signUp(
-            email: event.email, password: event.password);
+          email: event.email,
+          password: event.password,
+          firstName: event.firstName,
+          lastName: event.lastName,
+          image: event.image,
+        );
 
         emit(AuthenticatedState(userCredential.user!.email!));
       } on FirebaseAuthException catch (e) {
@@ -45,8 +48,7 @@ class AuthenticationBloc
 
     on<SignInEvent>((event, emit) async {
       try {
-        final UserCredential userCredential = await userRepository
-            .signInWithCredentials(event.email, event.password);
+        final UserCredential userCredential = await userRepository.signInWithCredentials(event.email, event.password);
 
         emit(AuthenticatedState(userCredential.user!.email!));
       } on FirebaseAuthException catch (e) {
