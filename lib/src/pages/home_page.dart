@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
 import 'package:si_app/src/pages/plots/plot_list.dart';
 import 'package:si_app/src/pages/settings_page.dart';
 import 'package:si_app/src/widgets/fructify_appbar.dart';
@@ -23,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: FructifyAppBar(onClick: switchPage),
       body: _pages[_currentPage],
     );

@@ -11,10 +11,8 @@ class PlotsBloc extends Bloc<PlotsEvent, PlotsState> {
   List<Plot> plots = [];
   PlotsBloc(this.apiService) : super(PlotsLoadingState()) {
     on<FetchPlotsEvent>((event, emit) async {
-      List<Plot>? _tempPlots = await apiService.getAllPlots();
-      if (_tempPlots != null && _tempPlots.isNotEmpty) {
-        plots = _tempPlots;
-      }
+      plots = await apiService.getAllPlots();
+
       emit(PlotsLoadedState(plots));
     });
 
@@ -32,4 +30,6 @@ class PlotsBloc extends Bloc<PlotsEvent, PlotsState> {
       emit(PlotsLoadedState(plots));
     });
   }
+
+  void clearPlotList() => plots.clear();
 }

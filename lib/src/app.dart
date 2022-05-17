@@ -12,7 +12,6 @@ import 'package:si_app/src/pages/settings_page.dart';
 import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 import 'package:si_app/src/services/settings/settings_controller.dart';
-import 'package:si_app/src/services/settings/settings_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -36,7 +35,11 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             )..add(CheckUserStatusEvent()),
           ),
-          BlocProvider<PlotsBloc>(create: (context) => PlotsBloc(context.read<ApiService>(),),),
+          BlocProvider<PlotsBloc>(
+            create: (context) => PlotsBloc(
+              context.read<ApiService>(),
+            ),
+          ),
         ],
         child: AnimatedBuilder(
           animation: settingsController,
@@ -89,7 +92,7 @@ class MyApp extends StatelessWidget {
                       case Routes.homeScreen:
                         return const HomePage();
                       case Routes.settingsScreen:
-                        return SettingsPage();
+                        return const SettingsPage();
                       default:
                         return const HomePage();
                     }

@@ -4,6 +4,7 @@ import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/pages/plots/new_plot_form.dart';
 import 'package:si_app/src/pages/plots/plot_tile.dart';
+import 'package:si_app/src/widgets/fructify_button.dart';
 import 'package:si_app/src/widgets/fructify_loader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -26,17 +27,13 @@ class _PlotListState extends State<PlotList> {
         if (state is PlotsLoadingState) return const FructifyLoader();
 
         if (state is PlotsLoadedState) return _showPlots(state.plots);
-        // if (state is PlotsLoadedState)
-        //   return NewPlotForm(
-        //     cancelForm: () => _bloc.add(CancelAddingNewPlotEvent()),
-        //     addPlot: (plot) => _bloc.add(AddNewPlotEvent(plot)),
-        //   );
 
-        if (state is AddingNewPlotState)
+        if (state is AddingNewPlotState) {
           return NewPlotForm(
             cancelForm: () => _bloc.add(CancelAddingNewPlotEvent()),
             addPlot: (plot) => _bloc.add(AddNewPlotEvent(plot)),
           );
+        }
 
         return const Text('Plots error');
       },
@@ -50,17 +47,31 @@ class _PlotListState extends State<PlotList> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(_localization.noAddedPlots),
-            TextButton(
-              onPressed: () => _bloc.add(OpenNewPlotFormEvent()),
-              child: Text(_localization.addPlot),
-            ),
+            _openNewPlotFormButton(),
+            const SizedBox(height: 20),
           ],
         ),
       );
     }
 
-    return Column(
-      children: plots.map((e) => PlotTile(plot: e)).toList(),
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ...plots.map((e) => PlotTile(plot: e)).toList(),
+            _openNewPlotFormButton(),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _openNewPlotFormButton() {
+    return FructifyButton(
+      onClick: () => _bloc.add(OpenNewPlotFormEvent()),
+      text: _localization.addPlot,
     );
   }
 }

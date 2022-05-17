@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:js';
 import 'package:dio/dio.dart';
 import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/plot.dart';
@@ -41,7 +40,7 @@ class ApiService {
     }
   }
 
-  Future<List<Plot>?> getAllPlots() async {
+  Future<List<Plot>> getAllPlots() async {
     try {
       var response = await _dio.get(
         baseUrl + plotsEndpoint + '/user/${UserRepository().getFirebaseId()}',
@@ -57,7 +56,7 @@ class ApiService {
       return [];
     } catch (e) {
       log('Api Service getAllPlots exception: ${e.toString()}');
-      return null;
+      return [];
     }
   }
 
