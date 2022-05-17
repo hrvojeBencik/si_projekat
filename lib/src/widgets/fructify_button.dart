@@ -7,6 +7,9 @@ class FructifyButton extends StatefulWidget {
     this.width,
     this.height,
     this.textStyle,
+    this.hoverColor,
+    this.bgColor,
+    this.detailsColor,
     required this.text,
     required this.onClick,
   }) : super(key: key);
@@ -15,6 +18,9 @@ class FructifyButton extends StatefulWidget {
   final double? height;
   final TextStyle? textStyle;
   final String text;
+  final Color? hoverColor;
+  final Color? bgColor;
+  final Color? detailsColor;
   final Function()? onClick;
 
   @override
@@ -31,25 +37,22 @@ class _FructifyButtonState extends State<FructifyButton> {
       height: widget.height,
       child: ElevatedButton(
         style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsets>(
-              const EdgeInsets.symmetric(horizontal: 34, vertical: 20)),
+          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(horizontal: 34, vertical: 20)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(200),
               side: isHovering
                   ? BorderSide.none
-                  : const BorderSide(
-                      color: FructifyColors.black,
+                  : BorderSide(
+                      color: widget.detailsColor ?? FructifyColors.black,
                     ),
             ),
           ),
           foregroundColor: MaterialStateProperty.all<Color>(
             isHovering ? FructifyColors.white : FructifyColors.black,
           ),
-          overlayColor:
-              MaterialStateProperty.all<Color>(FructifyColors.lightGreen),
-          backgroundColor:
-              MaterialStateProperty.all<Color>(FructifyColors.white),
+          overlayColor: MaterialStateProperty.all<Color>(widget.hoverColor ?? FructifyColors.lightGreen),
+          backgroundColor: MaterialStateProperty.all<Color>(widget.bgColor ?? FructifyColors.white),
         ),
         onPressed: widget.onClick,
         onHover: (value) {
@@ -60,8 +63,9 @@ class _FructifyButtonState extends State<FructifyButton> {
         child: Text(
           widget.text,
           style: widget.textStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 18,
+                color: widget.detailsColor,
               ),
         ),
       ),

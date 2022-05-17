@@ -56,4 +56,8 @@ class UserRepository {
       return null;
     }
   }
+
+  String getFirebaseId() {
+    return _firebaseAuth.currentUser!.uid;
+  }
 }

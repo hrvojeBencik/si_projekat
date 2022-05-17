@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             )..add(CheckUserStatusEvent()),
           ),
-          BlocProvider<PlotsBloc>(create: (context) => PlotsBloc()),
+          BlocProvider<PlotsBloc>(create: (context) => PlotsBloc(context.read<ApiService>(),),),
         ],
         child: AnimatedBuilder(
           animation: settingsController,

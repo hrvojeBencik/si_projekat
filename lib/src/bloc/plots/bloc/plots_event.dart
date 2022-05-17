@@ -9,7 +9,13 @@ abstract class PlotsEvent extends Equatable {
 
 class FetchPlotsEvent extends PlotsEvent {}
 
-class AddNewPlotEvent extends PlotsEvent {}
+class OpenNewPlotFormEvent extends PlotsEvent {}
+
+class AddNewPlotEvent extends PlotsEvent {
+  final Plot plot;
+
+  const AddNewPlotEvent(this.plot);
+}
 
 class SubmitAddingNewPlotEvent extends PlotsEvent {}
 

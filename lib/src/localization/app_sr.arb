@@ -21,5 +21,6 @@
     "noAddedPlots": "Nemaš unetih parcela",
     "addPlot": "Dodaj parcelu",
     "cancel": "Poništi",
-    "submit": "Potvrdi"
+    "submit": "Potvrdi",
+    "addPlotName": "Unesi naziv parcele"
 }
