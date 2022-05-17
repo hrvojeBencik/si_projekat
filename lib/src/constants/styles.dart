@@ -9,4 +9,9 @@ class FructifyTextStyles {
     fontSize: 48,
     fontWeight: FontWeight.bold,
   );
+
+  final TextStyle headerStyle2 = const TextStyle(
+    fontSize: 36,
+    fontWeight: FontWeight.bold,
+  );
 }

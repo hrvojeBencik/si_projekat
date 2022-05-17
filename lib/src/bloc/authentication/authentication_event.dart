@@ -12,8 +12,11 @@ class CheckUserStatusEvent extends AuthenticationEvent {}
 class RegisterEvent extends AuthenticationEvent {
   final String email;
   final String password;
+  final String firstName;
+  final String lastName;
+  final String image;
 
-  const RegisterEvent(this.email, this.password);
+  const RegisterEvent({required this.email, required this.password, required this.firstName, required this.lastName, this.image = ''});
 
   @override
   List<Object> get props => [email, password];
