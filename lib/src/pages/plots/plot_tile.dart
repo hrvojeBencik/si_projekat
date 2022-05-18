@@ -22,7 +22,7 @@ class PlotTile extends StatelessWidget {
           overlayColor: MaterialStateProperty.all<Color>(FructifyColors.whiteGreen),
           onTap: () {
             // Go to plot screen
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PlotPage(plot: plot)));
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => PlotPage(plot: plot)));
           },
           child: Padding(
             padding: const EdgeInsets.all(20),

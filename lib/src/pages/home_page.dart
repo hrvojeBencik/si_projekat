@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:si_app/src/pages/plots/plot_list.dart';
+import 'package:si_app/src/pages/plots/plot_page.dart';
 import 'package:si_app/src/pages/settings_page.dart';
 import 'package:si_app/src/widgets/fructify_appbar.dart';
 
@@ -14,7 +15,8 @@ class _HomePageState extends State<HomePage> {
   int _currentPage = 0;
 
   final List<Widget> _pages = [
-    const PlotList(),
+    // const PlotList(),
+    PlotPage(),
     const SettingsPage(),
   ];
 
