@@ -6,6 +6,7 @@ import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/mock_data.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
+import 'package:si_app/src/pages/plots/tillage/tillage_evidence.dart';
 
 class PlotPage extends StatefulWidget {
   // const PlotPage({Key? key, required this.plot}) : super(key: key);
@@ -55,6 +56,9 @@ class _PlotPageState extends State<PlotPage> {
             children: [
               _header(),
               _map(),
+              TillageEvidence(
+                plotId: widget.plot.id!,
+              ),
             ],
           ),
         ),
@@ -65,7 +69,10 @@ class _PlotPageState extends State<PlotPage> {
   Widget _header() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Text(widget.plot.name, style: FructifyStyles.textStyle.headerStyle2),
+      child: Text(
+        widget.plot.name,
+        style: FructifyStyles.textStyle.headerStyle2,
+      ),
     );
   }
 

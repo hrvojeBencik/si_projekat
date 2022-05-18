@@ -1,5 +1,6 @@
 {
     "appTitle": "Fructify",
+    "genericErrorMessage": "Desila se greška, molimo te pokušaj ponovo kasnije.",
     "register": "Register",
     "registerHeader": "Fructify Register",
     "loginHeader": "Fructify login",
@@ -22,5 +23,15 @@
     "addPlot": "Dodaj parcelu",
     "cancel": "Poništi",
     "submit": "Potvrdi",
-    "addPlotName": "Unesi naziv parcele"
+    "addPlotName": "Unesi naziv parcele",
+    "care": "Zaštita",
+    "supplementation": "Prihrana",
+    "tillage": "Obrada",
+    "watering": "Zalivanje",
+    "yield": "Prinos",
+    "tillageTypeHint": "Tip obrade(npr. Freziranje)",
+    "tillageDate": "Datum obrade",
+    "comment": "Komentar",
+    "newTillageSuccessAdd": "Uspešno ste dodali evidenciju o obradi zemljišta.",
+    "newTillageError": "Greška prilikom dodavanja evidencije o obradi zemljišta."
 }

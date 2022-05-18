@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:si_app/src/pages/plots/plot_list.dart';
 import 'package:si_app/src/pages/plots/plot_page.dart';
 import 'package:si_app/src/pages/settings_page.dart';
 import 'package:si_app/src/widgets/fructify_appbar.dart';

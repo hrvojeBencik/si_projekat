@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/plot.dart';
+import 'package:si_app/src/models/tillage.dart';
 import 'package:si_app/src/models/user.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 
@@ -73,6 +74,37 @@ class ApiService {
     } catch (e) {
       log('Api Service addNewPlot exception: ${e.toString()}');
       return null;
+    }
+  }
+
+  Future<Tillage?> addNewTillage(Tillage tillage) async {
+    try {
+      var response = await _dio.post(
+        baseUrl + tillageEndpoint,
+        data: json.encode(tillage.toJson()),
+      );
+
+      Tillage _tillage = Tillage.fromJson(response.data);
+
+      return _tillage;
+    } catch (e) {
+      log('Api Service addNewTillage exception: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<List<Tillage>> getTillagesByPlot(String plotId) async {
+    try {
+      var response = await _dio.get(
+        baseUrl + tillageEndpoint + '/plot/$plotId',
+      );
+
+      List<Tillage> _tillages = getTillagesFromJson(response.data);
+
+      return _tillages;
+    } catch (e) {
+      log('Api Service addNewTillage exception: ${e.toString()}');
+      return [];
     }
   }
 }

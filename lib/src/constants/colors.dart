@@ -6,4 +6,5 @@ class FructifyColors {
   static const whiteGreen = Color(0xFFEFEFE8);
   static const black = Colors.black;
   static const white = Colors.white;
+  static const red = Colors.red;
 }
