@@ -4,7 +4,7 @@ import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/pages/landing_page/login_form.dart';
 import 'package:si_app/src/pages/landing_page/register_form.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:si_app/src/widgets/fructify_footer.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -95,15 +95,7 @@ class _LandingPageState extends State<LandingPage> {
         ),
         Expanded(
           flex: 1,
-          child: Container(
-            alignment: Alignment.bottomCenter,
-            padding: const EdgeInsets.only(bottom: 5),
-            width: double.infinity,
-            color: FructifyColors.white,
-            child: Text(
-              AppLocalizations.of(context)!.legalRights,
-            ),
-          ),
+          child: FructifyFooter(context: context),
         ),
       ],
     );

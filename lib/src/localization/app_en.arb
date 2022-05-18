@@ -33,5 +33,9 @@
     "tillageDate": "Datum obrade",
     "comment": "Komentar",
     "newTillageSuccessAdd": "Uspešno ste dodali evidenciju o obradi zemljišta.",
-    "newTillageError": "Greška prilikom dodavanja evidencije o obradi zemljišta."
+    "newTillageError": "Greška prilikom dodavanja evidencije o obradi zemljišta.",
+    "newWateringSuccessAdd": "Uspešno ste dodali evidenciju o zalivanju zemljišta.",
+    "newWateringError": "Greška prilikom dodavanja evidencije o zalivanju zemljišta.",
+    "wateringTypeHint": "Tip zalivanja",
+    "wateringDate": "Datum zalivanja"
 }

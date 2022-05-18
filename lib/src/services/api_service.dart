@@ -5,6 +5,7 @@ import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/models/tillage.dart';
 import 'package:si_app/src/models/user.dart';
+import 'package:si_app/src/models/watering.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 
 class ApiService {
@@ -102,6 +103,37 @@ class ApiService {
       List<Tillage> _tillages = getTillagesFromJson(response.data);
 
       return _tillages;
+    } catch (e) {
+      log('Api Service addNewTillage exception: ${e.toString()}');
+      return [];
+    }
+  }
+
+  Future<Watering?> addNewWatering(Watering watering) async {
+    try {
+      var response = await _dio.post(
+        baseUrl + wateringEndpoint,
+        data: json.encode(watering.toJson()),
+      );
+
+      Watering _watering = Watering.fromJson(response.data);
+
+      return _watering;
+    } catch (e) {
+      log('Api Service addNewTillage exception: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<List<Watering>> getWateringsByPlot(String plotId) async {
+    try {
+      var response = await _dio.get(
+        baseUrl + wateringEndpoint + '/plot/$plotId',
+      );
+
+      List<Watering> _waterings = getWateringsFromJson(response.data);
+
+      return _waterings;
     } catch (e) {
       log('Api Service addNewTillage exception: ${e.toString()}');
       return [];

@@ -7,6 +7,8 @@ import 'package:si_app/src/constants/mock_data.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/pages/plots/tillage/tillage_evidence.dart';
+import 'package:si_app/src/pages/plots/watering/watering_evidence.dart';
+import 'package:si_app/src/widgets/fructify_footer.dart';
 
 class PlotPage extends StatefulWidget {
   // const PlotPage({Key? key, required this.plot}) : super(key: key);
@@ -49,6 +51,7 @@ class _PlotPageState extends State<PlotPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: size.width > 1000 ? 200 : 10),
@@ -56,12 +59,28 @@ class _PlotPageState extends State<PlotPage> {
             children: [
               _header(),
               _map(),
+              _customDivider(),
               TillageEvidence(
                 plotId: widget.plot.id!,
               ),
+              _customDivider(),
+              WateringEvidence(
+                plotId: widget.plot.id!,
+              ),
+              const SizedBox(height: 50),
+              FructifyFooter(context: context),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _customDivider() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Divider(
+        color: FructifyColors.lightGreen,
       ),
     );
   }

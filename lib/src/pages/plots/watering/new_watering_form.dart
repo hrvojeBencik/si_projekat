@@ -1,35 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:si_app/src/bloc/tillage/tillage_bloc.dart';
+import 'package:si_app/src/bloc/watering/watering_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:si_app/src/models/tillage.dart';
+import 'package:si_app/src/models/watering.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 
-class NewTillageForm extends StatefulWidget {
-  const NewTillageForm({Key? key, required this.closeForm, required this.plotId}) : super(key: key);
+class NewWateringForm extends StatefulWidget {
+  const NewWateringForm({Key? key, required this.closeForm, required this.plotId}) : super(key: key);
 
   final Function() closeForm;
   final String plotId;
 
   @override
-  State<NewTillageForm> createState() => _NewTillageFormState();
+  State<NewWateringForm> createState() => _NewWateringFormState();
 }
 
-class _NewTillageFormState extends State<NewTillageForm> {
+class _NewWateringFormState extends State<NewWateringForm> {
   late final AppLocalizations _localization = AppLocalizations.of(context)!;
-  DateTime? _selectedDate = DateTime.now();
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
-  String _tillageType = '';
+  String _wateringType = '';
 
   @override
   void initState() {
     super.initState();
     _typeController.addListener(() {
       setState(() {
-        _tillageType = _typeController.text;
+        _wateringType = _typeController.text;
       });
     });
   }
@@ -51,24 +49,20 @@ class _NewTillageFormState extends State<NewTillageForm> {
           child: _commentField(),
         ),
         const SizedBox(width: 20),
-        Expanded(
-          child: _dateField(),
-        ),
-        const SizedBox(width: 20),
         IconButton(
-          onPressed: _tillageType == '' || _selectedDate == null
+          onPressed: _wateringType == ''
               ? null
               : () {
                   widget.closeForm();
-                  final Tillage _tillage = Tillage(
+                  final Watering _watering = Watering(
                     plotId: widget.plotId,
                     userFirebaseId: context.read<UserRepository>().getFirebaseId(),
-                    date: _selectedDate!,
+                    date: DateTime.now(),
                     quantity: '',
-                    type: _tillageType,
+                    type: _wateringType,
                     comment: _commentController.text,
                   );
-                  context.read<TillageBloc>().add(AddTillageEvent(_tillage));
+                  context.read<WateringBloc>().add(AddWateringEvent(_watering));
                 },
           icon: const Icon(
             Icons.check,
@@ -101,7 +95,7 @@ class _NewTillageFormState extends State<NewTillageForm> {
           borderSide: const BorderSide(color: FructifyColors.lightGreen),
           borderRadius: BorderRadius.circular(8),
         ),
-        labelText: _localization.tillageTypeHint + '*',
+        labelText: _localization.wateringTypeHint + '*',
         labelStyle: const TextStyle(
           color: FructifyColors.lightGreen,
         ),
@@ -125,28 +119,6 @@ class _NewTillageFormState extends State<NewTillageForm> {
         ),
         labelText: _localization.comment,
         labelStyle: const TextStyle(
-          color: FructifyColors.lightGreen,
-        ),
-      ),
-    );
-  }
-
-  Widget _dateField() {
-    return TextButton(
-      onPressed: () async {
-        _selectedDate = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime.now(),
-        );
-        _selectedDate ??= DateTime.now();
-
-        setState(() {});
-      },
-      child: Text(
-        DateFormat('dd.MM.yyyy.').format(_selectedDate ?? DateTime.now()),
-        style: const TextStyle(
           color: FructifyColors.lightGreen,
         ),
       ),
