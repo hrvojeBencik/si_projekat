@@ -37,5 +37,9 @@
     "newWateringSuccessAdd": "Uspešno ste dodali evidenciju o navodnjavanju zemljišta.",
     "newWateringError": "Greška prilikom dodavanja evidencije o navodnjavanju zemljišta.",
     "wateringTypeHint": "Tip navodnjavanja(npr. Kap to kap)",
-    "wateringDate": "Datum navodnjavanja"
+    "wateringDate": "Datum navodnjavanja",
+    "newCareSuccessAdd": "Uspešno ste dodali evidenciju o zaštiti voćnjaka.",
+    "newCareError": "Greška prilikom dodavanja evidencije o zaštiti voćnjaka.",
+    "careTypeHint": "Tip obrade(npr. Herbicidi)",
+    "careQuantityHint": "Količina(npr. 7l/ha)"
 }

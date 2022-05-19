@@ -12,6 +12,7 @@ class WateringBloc extends Bloc<WateringEvent, WateringState> {
   WateringBloc(this._apiService) : super(LoadingWateringsState()) {
     on<LoadWateringsEvent>((event, emit) async {
       _waterings = await _apiService.getWateringsByPlot(event.plotId);
+      _waterings.sort((a, b) => a.date.compareTo(b.date));
       emit(WateringsLoadedState(_waterings));
     });
 
@@ -23,6 +24,8 @@ class WateringBloc extends Bloc<WateringEvent, WateringState> {
       } else {
         emit(NewWateringErrorState());
       }
+
+      _waterings.sort((a, b) => a.date.compareTo(b.date));
       emit(WateringsLoadedState(_waterings));
     });
   }

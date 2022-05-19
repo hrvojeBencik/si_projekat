@@ -6,6 +6,7 @@ import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/mock_data.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
+import 'package:si_app/src/pages/plots/care/care_evidence.dart';
 import 'package:si_app/src/pages/plots/tillage/tillage_evidence.dart';
 import 'package:si_app/src/pages/plots/watering/watering_evidence.dart';
 import 'package:si_app/src/widgets/fructify_footer.dart';
@@ -58,13 +59,17 @@ class _PlotPageState extends State<PlotPage> {
           child: Column(
             children: [
               _header(),
-              _map(),
+              // _map(),
               _customDivider(),
               TillageEvidence(
                 plotId: widget.plot.id!,
               ),
               _customDivider(),
               WateringEvidence(
+                plotId: widget.plot.id!,
+              ),
+              _customDivider(),
+              CareEvidence(
                 plotId: widget.plot.id!,
               ),
               const SizedBox(height: 50),

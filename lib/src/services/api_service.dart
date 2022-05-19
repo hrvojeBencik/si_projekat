@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:si_app/config/api.dart';
+import 'package:si_app/src/models/care.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/models/tillage.dart';
 import 'package:si_app/src/models/user.dart';
@@ -135,7 +136,38 @@ class ApiService {
 
       return _waterings;
     } catch (e) {
-      log('Api Service addNewTillage exception: ${e.toString()}');
+      log('Api Service addNewWatering exception: ${e.toString()}');
+      return [];
+    }
+  }
+
+  Future<Care?> addNewCare(Care care) async {
+    try {
+      var response = await _dio.post(
+        baseUrl + careEndpoint,
+        data: json.encode(care.toJson()),
+      );
+
+      Care _care = Care.fromJson(response.data);
+
+      return _care;
+    } catch (e) {
+      log('Api Service addNewCare exception: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<List<Care>> getCaresByPlot(String plotId) async {
+    try {
+      var response = await _dio.get(
+        baseUrl + careEndpoint + '/plot/$plotId',
+      );
+
+      List<Care> _cares = getCaresFromJson(response.data);
+
+      return _cares;
+    } catch (e) {
+      log('Api Service addNewCare exception: ${e.toString()}');
       return [];
     }
   }

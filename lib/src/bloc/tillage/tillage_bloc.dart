@@ -12,6 +12,7 @@ class TillageBloc extends Bloc<TillageEvent, TillageState> {
   TillageBloc(this._apiService) : super(LoadingTillagesState()) {
     on<LoadTillagesEvent>((event, emit) async {
       _tillages = await _apiService.getTillagesByPlot(event.plotId);
+      _tillages.sort((a, b) => a.date.compareTo(b.date));
       emit(TillagesLoadedState(_tillages));
     });
 
@@ -23,6 +24,8 @@ class TillageBloc extends Bloc<TillageEvent, TillageState> {
       } else {
         emit(NewTillageErrorState());
       }
+
+      _tillages.sort((a, b) => a.date.compareTo(b.date));
       emit(TillagesLoadedState(_tillages));
     });
   }

@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
+import 'package:si_app/src/bloc/care/care_bloc.dart';
 import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
 import 'package:si_app/src/bloc/tillage/tillage_bloc.dart';
 import 'package:si_app/src/bloc/watering/watering_bloc.dart';
@@ -50,6 +51,11 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<WateringBloc>(
             create: (context) => WateringBloc(
+              context.read<ApiService>(),
+            ),
+          ),
+          BlocProvider<CareBloc>(
+            create: (context) => CareBloc(
               context.read<ApiService>(),
             ),
           ),
