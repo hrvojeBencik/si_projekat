@@ -16,3 +16,5 @@ class PlotsLoadedState extends PlotsState {
 }
 
 class AddingNewPlotState extends PlotsState {}
+
+class SuccessfullyAddedPlotState extends PlotsState {}

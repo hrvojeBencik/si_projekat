@@ -27,7 +27,8 @@ class PlotsBloc extends Bloc<PlotsEvent, PlotsState> {
     on<AddNewPlotEvent>((event, emit) async {
       plots.add(event.plot);
       await apiService.addNewPlot(event.plot);
-      emit(PlotsLoadedState(plots));
+
+      add(FetchPlotsEvent());
     });
   }
 

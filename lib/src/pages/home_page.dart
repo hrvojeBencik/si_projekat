@@ -21,10 +21,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: FructifyAppBar(onClick: switchPage),
-      body: _pages[_currentPage],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: FructifyAppBar(onClick: switchPage),
+        body: _pages[_currentPage],
+      ),
     );
   }
 

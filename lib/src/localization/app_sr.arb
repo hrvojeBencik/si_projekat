@@ -54,5 +54,6 @@
     "expenseCommentHint": "Komentar(npr. Troskovi radne snage)",
     "newYieldSuccessAdd": "Uspešno ste dodali evidenciju o prihodima i rashodima voćnjaka.",
     "newYieldError": "Greška prilikom dodavanja evidencije o prihodima i rashodima voćnjaka.",
-    "successfulDelete": "Uspešno brisanje"
+    "successfulDelete": "Uspešno brisanje",
+    "successfullyAddedPlot": "Parcela uspešno sačuvana"
 }

@@ -24,7 +24,7 @@ class PlotPage extends StatefulWidget {
 }
 
 class _PlotPageState extends State<PlotPage> {
-  late Size size;
+  late Size size = MediaQuery.of(context).size;
   final Set<Polygon> _polygons = HashSet<Polygon>();
   late final CameraPosition _initialCameraPosition;
 
@@ -45,43 +45,40 @@ class _PlotPageState extends State<PlotPage> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    size = MediaQuery.of(context).size;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width > 1000 ? 200 : 10),
-          child: Column(
-            children: [
-              _header(),
-              _map(),
-              _customDivider(),
-              TillageEvidence(
-                plotId: widget.plot.id!,
-              ),
-              _customDivider(),
-              WateringEvidence(
-                plotId: widget.plot.id!,
-              ),
-              _customDivider(),
-              CareEvidence(
-                plotId: widget.plot.id!,
-              ),
-              _customDivider(),
-              SupplementationEvidence(
-                plotId: widget.plot.id!,
-              ),
-              _customDivider(),
-              YieldEvidence(plotId: widget.plot.id!),
-              const SizedBox(height: 50),
-              FructifyFooter(context: context),
-            ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width > 1000 ? 200 : 10),
+            child: Column(
+              children: [
+                _header(),
+                _map(),
+                _customDivider(),
+                TillageEvidence(
+                  plotId: widget.plot.id!,
+                ),
+                _customDivider(),
+                WateringEvidence(
+                  plotId: widget.plot.id!,
+                ),
+                _customDivider(),
+                CareEvidence(
+                  plotId: widget.plot.id!,
+                ),
+                _customDivider(),
+                SupplementationEvidence(
+                  plotId: widget.plot.id!,
+                ),
+                _customDivider(),
+                YieldEvidence(plotId: widget.plot.id!),
+                const SizedBox(height: 50),
+                FructifyFooter(context: context),
+              ],
+            ),
           ),
         ),
       ),
@@ -100,9 +97,22 @@ class _PlotPageState extends State<PlotPage> {
   Widget _header() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Text(
-        widget.plot.name,
-        style: FructifyStyles.textStyle.headerStyle2,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            widget.plot.name,
+            style: FructifyStyles.textStyle.headerStyle2,
+          ),
+          IconButton(
+            padding: EdgeInsets.zero,
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(
+              Icons.close,
+              size: 40,
+            ),
+          ),
+        ],
       ),
     );
   }
