@@ -41,6 +41,13 @@ class _WateringEvidenceState extends State<WateringEvidence> {
             color: FructifyColors.red,
           );
         }
+
+        if (state is SuccessfullDelete) {
+          displayToast(
+            message: _localization.successfulDelete,
+            color: FructifyColors.red,
+          );
+        }
       },
       builder: (context, state) {
         if (state is LoadingWateringsState) {
@@ -60,7 +67,12 @@ class _WateringEvidenceState extends State<WateringEvidence> {
                   plotId: widget.plotId,
                   bloc: _bloc,
                 ),
-              ...state.waterings.map((e) => WateringTile(watering: e)).toList(),
+              ...state.waterings
+                  .map((e) => WateringTile(
+                        watering: e,
+                        bloc: _bloc,
+                      ))
+                  .toList(),
             ],
           );
         }

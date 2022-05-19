@@ -19,4 +19,8 @@ class AddWateringEvent extends WateringEvent {
   const AddWateringEvent(this.watering);
 }
 
-class RemoveWateringEvent extends WateringEvent {}
+class RemoveWateringEvent extends WateringEvent {
+  final Watering watering;
+
+  const RemoveWateringEvent(this.watering);
+}

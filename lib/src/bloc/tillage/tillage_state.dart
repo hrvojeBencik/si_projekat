@@ -18,3 +18,5 @@ class TillagesLoadedState extends TillageState {
 class NewTillageSuccessfullyAddedState extends TillageState {}
 
 class NewTillageErrorState extends TillageState {}
+
+class SuccessfullDelete extends TillageState {}

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:si_app/src/bloc/watering/watering_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/models/watering.dart';
 
 class WateringTile extends StatelessWidget {
-  const WateringTile({Key? key, required this.watering}) : super(key: key);
+  const WateringTile({Key? key, required this.watering, required this.bloc}) : super(key: key);
 
   final Watering watering;
+  final WateringBloc bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class WateringTile extends StatelessWidget {
         const Spacer(),
         IconButton(
           onPressed: () {
-            // Delete entry
+            bloc.add(RemoveWateringEvent(watering));
           },
           icon: const Icon(
             Icons.delete,

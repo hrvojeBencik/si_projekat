@@ -18,3 +18,5 @@ class SupplementationsLoadedState extends SupplementationState {
 class NewSupplementationSuccessfullyAddedState extends SupplementationState {}
 
 class NewSupplementationErrorState extends SupplementationState {}
+
+class SuccessfullDelete extends SupplementationState {}

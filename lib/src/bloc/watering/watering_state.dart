@@ -18,3 +18,5 @@ class WateringsLoadedState extends WateringState {
 class NewWateringSuccessfullyAddedState extends WateringState {}
 
 class NewWateringErrorState extends WateringState {}
+
+class SuccessfullDelete extends WateringState {}

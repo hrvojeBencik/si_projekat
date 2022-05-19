@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/care.dart';
 import 'package:si_app/src/services/api_service.dart';
 
@@ -24,6 +25,16 @@ class CareBloc extends Bloc<CareEvent, CareState> {
       } else {
         emit(NewCareErrorState());
       }
+
+      _cares.sort((a, b) => a.date.compareTo(b.date));
+      emit(CaresLoadedState(_cares));
+    });
+
+    on<RemoveCareEvent>((event, emit) async {
+      await _apiService.deleteInstanceById(careEndpoint, event.care.id!);
+      _cares.removeWhere((element) => element.id! == event.care.id!);
+
+      emit(SuccessfullDelete());
 
       _cares.sort((a, b) => a.date.compareTo(b.date));
       emit(CaresLoadedState(_cares));

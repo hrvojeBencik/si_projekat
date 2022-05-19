@@ -41,6 +41,13 @@ class _TillageEvidenceState extends State<TillageEvidence> {
             color: FructifyColors.red,
           );
         }
+
+        if (state is SuccessfullDelete) {
+          displayToast(
+            message: _localization.successfulDelete,
+            color: FructifyColors.red,
+          );
+        }
       },
       builder: (context, state) {
         if (state is LoadingTillagesState) {
@@ -61,7 +68,12 @@ class _TillageEvidenceState extends State<TillageEvidence> {
                   bloc: _bloc,
                 ),
               // Tillage Tiles
-              ...state.tillages.map((e) => TillageTile(tillage: e)).toList()
+              ...state.tillages
+                  .map((e) => TillageTile(
+                        tillage: e,
+                        bloc: _bloc,
+                      ))
+                  .toList()
             ],
           );
         }

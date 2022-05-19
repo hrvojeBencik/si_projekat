@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/yield.dart';
 import 'package:si_app/src/services/api_service.dart';
 
@@ -24,6 +25,16 @@ class YieldBloc extends Bloc<YieldEvent, YieldState> {
       } else {
         emit(NewYieldErrorState());
       }
+
+      _yields.sort((a, b) => a.date.compareTo(b.date));
+      emit(YieldsLoadedState(_yields));
+    });
+
+    on<RemoveYieldEvent>((event, emit) async {
+      await _apiService.deleteInstanceById(yieldEndpoint, event.y.id!);
+      _yields.removeWhere((element) => element.id! == event.y.id!);
+
+      emit(SuccessfullDelete());
 
       _yields.sort((a, b) => a.date.compareTo(b.date));
       emit(YieldsLoadedState(_yields));

@@ -19,4 +19,8 @@ class AddTillageEvent extends TillageEvent {
   const AddTillageEvent(this.tillage);
 }
 
-class RemoveTillageEvent extends TillageEvent {}
+class RemoveTillageEvent extends TillageEvent {
+  final Tillage tillage;
+
+  const RemoveTillageEvent(this.tillage);
+}

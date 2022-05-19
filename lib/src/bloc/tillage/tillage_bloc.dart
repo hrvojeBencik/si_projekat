@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/tillage.dart';
 import 'package:si_app/src/services/api_service.dart';
 
@@ -24,6 +25,16 @@ class TillageBloc extends Bloc<TillageEvent, TillageState> {
       } else {
         emit(NewTillageErrorState());
       }
+
+      _tillages.sort((a, b) => a.date.compareTo(b.date));
+      emit(TillagesLoadedState(_tillages));
+    });
+
+    on<RemoveTillageEvent>((event, emit) async {
+      await _apiService.deleteInstanceById(tillageEndpoint, event.tillage.id!);
+      _tillages.removeWhere((element) => element.id! == event.tillage.id!);
+
+      emit(SuccessfullDelete());
 
       _tillages.sort((a, b) => a.date.compareTo(b.date));
       emit(TillagesLoadedState(_tillages));

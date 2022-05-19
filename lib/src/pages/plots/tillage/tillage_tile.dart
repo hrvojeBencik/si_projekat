@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:si_app/src/bloc/tillage/tillage_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/models/tillage.dart';
 
 class TillageTile extends StatelessWidget {
-  const TillageTile({Key? key, required this.tillage}) : super(key: key);
+  const TillageTile({Key? key, required this.tillage, required this.bloc}) : super(key: key);
 
   final Tillage tillage;
+  final TillageBloc bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class TillageTile extends StatelessWidget {
         const Spacer(),
         IconButton(
           onPressed: () {
-            // Delete entry
+            bloc.add(RemoveTillageEvent(tillage));
           },
           icon: const Icon(
             Icons.delete,

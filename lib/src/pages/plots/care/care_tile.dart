@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:si_app/src/bloc/care/care_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/models/care.dart';
 
 class CareTile extends StatelessWidget {
-  const CareTile({Key? key, required this.care}) : super(key: key);
+  const CareTile({Key? key, required this.care, required this.bloc}) : super(key: key);
 
   final Care care;
+  final CareBloc bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class CareTile extends StatelessWidget {
         const Spacer(),
         IconButton(
           onPressed: () {
-            // Delete entry
+            bloc.add(RemoveCareEvent(care));
           },
           icon: const Icon(
             Icons.delete,

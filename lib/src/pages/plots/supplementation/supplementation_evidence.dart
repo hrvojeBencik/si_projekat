@@ -41,6 +41,13 @@ class _SupplementationEvidenceState extends State<SupplementationEvidence> {
             color: FructifyColors.red,
           );
         }
+
+        if (state is SuccessfullDelete) {
+          displayToast(
+            message: _localization.successfulDelete,
+            color: FructifyColors.red,
+          );
+        }
       },
       builder: (context, state) {
         if (state is LoadingSupplementationsState) {
@@ -60,7 +67,12 @@ class _SupplementationEvidenceState extends State<SupplementationEvidence> {
                   plotId: widget.plotId,
                   bloc: _bloc,
                 ),
-              ...state.supplementations.map((e) => SupplementationTile(supplementation: e)).toList()
+              ...state.supplementations
+                  .map((e) => SupplementationTile(
+                        supplementation: e,
+                        bloc: _bloc,
+                      ))
+                  .toList()
             ],
           );
         }

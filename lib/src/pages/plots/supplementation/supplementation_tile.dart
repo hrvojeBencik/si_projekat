@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:si_app/src/bloc/supplementation/supplementation_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/models/supplementation.dart';
 
 class SupplementationTile extends StatelessWidget {
-  const SupplementationTile({Key? key, required this.supplementation}) : super(key: key);
+  const SupplementationTile({Key? key, required this.supplementation, required this.bloc}) : super(key: key);
 
   final Supplementation supplementation;
+  final SupplementationBloc bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class SupplementationTile extends StatelessWidget {
         const Spacer(),
         IconButton(
           onPressed: () {
-            // Delete entry
+            bloc.add(RemoveSupplementationEvent(supplementation));
           },
           icon: const Icon(
             Icons.delete,

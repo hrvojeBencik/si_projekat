@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/supplementation.dart';
 import 'package:si_app/src/services/api_service.dart';
 
@@ -24,6 +25,16 @@ class SupplementationBloc extends Bloc<SupplementationEvent, SupplementationStat
       } else {
         emit(NewSupplementationErrorState());
       }
+
+      _supplementations.sort((a, b) => a.date.compareTo(b.date));
+      emit(SupplementationsLoadedState(_supplementations));
+    });
+
+    on<RemoveSupplementationEvent>((event, emit) async {
+      await _apiService.deleteInstanceById(supplementationEndpoint, event.supplementation.id!);
+      _supplementations.removeWhere((element) => element.id! == event.supplementation.id!);
+
+      emit(SuccessfullDelete());
 
       _supplementations.sort((a, b) => a.date.compareTo(b.date));
       emit(SupplementationsLoadedState(_supplementations));

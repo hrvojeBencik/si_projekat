@@ -41,6 +41,13 @@ class _YieldEvidenceState extends State<YieldEvidence> {
             color: FructifyColors.red,
           );
         }
+
+        if (state is SuccessfullDelete) {
+          displayToast(
+            message: _localization.successfulDelete,
+            color: FructifyColors.red,
+          );
+        }
       },
       builder: (context, state) {
         if (state is LoadingYieldsState) {
@@ -60,7 +67,12 @@ class _YieldEvidenceState extends State<YieldEvidence> {
                   plotId: widget.plotId,
                   bloc: _bloc,
                 ),
-              ...state.yields.map((e) => YieldTile(yield: e)).toList()
+              ...state.yields
+                  .map((e) => YieldTile(
+                        yield: e,
+                        bloc: _bloc,
+                      ))
+                  .toList()
             ],
           );
         }

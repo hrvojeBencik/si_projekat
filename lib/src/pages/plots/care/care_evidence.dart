@@ -41,6 +41,13 @@ class _CareEvidenceState extends State<CareEvidence> {
             color: FructifyColors.red,
           );
         }
+
+        if (state is SuccessfullDelete) {
+          displayToast(
+            message: _localization.successfulDelete,
+            color: FructifyColors.red,
+          );
+        }
       },
       builder: (context, state) {
         if (state is LoadingCaresState) {
@@ -60,7 +67,12 @@ class _CareEvidenceState extends State<CareEvidence> {
                   plotId: widget.plotId,
                   bloc: _bloc,
                 ),
-              ...state.cares.map((e) => CareTile(care: e)).toList()
+              ...state.cares
+                  .map((e) => CareTile(
+                        care: e,
+                        bloc: _bloc,
+                      ))
+                  .toList()
             ],
           );
         }

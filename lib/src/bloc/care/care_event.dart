@@ -19,4 +19,8 @@ class AddCareEvent extends CareEvent {
   const AddCareEvent(this.care);
 }
 
-class RemoveCareEvent extends CareEvent {}
+class RemoveCareEvent extends CareEvent {
+  final Care care;
+
+  const RemoveCareEvent(this.care);
+}

@@ -18,3 +18,5 @@ class YieldsLoadedState extends YieldState {
 class NewYieldSuccessfullyAddedState extends YieldState {}
 
 class NewYieldErrorState extends YieldState {}
+
+class SuccessfullDelete extends YieldState {}

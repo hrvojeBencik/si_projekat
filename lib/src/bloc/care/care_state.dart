@@ -18,3 +18,5 @@ class CaresLoadedState extends CareState {
 class NewCareSuccessfullyAddedState extends CareState {}
 
 class NewCareErrorState extends CareState {}
+
+class SuccessfullDelete extends CareState {}

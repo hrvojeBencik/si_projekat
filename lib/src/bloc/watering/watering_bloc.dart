@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/watering.dart';
 import 'package:si_app/src/services/api_service.dart';
 
@@ -24,6 +25,16 @@ class WateringBloc extends Bloc<WateringEvent, WateringState> {
       } else {
         emit(NewWateringErrorState());
       }
+
+      _waterings.sort((a, b) => a.date.compareTo(b.date));
+      emit(WateringsLoadedState(_waterings));
+    });
+
+    on<RemoveWateringEvent>((event, emit) async {
+      await _apiService.deleteInstanceById(wateringEndpoint, event.watering.id!);
+      _waterings.removeWhere((element) => element.id! == event.watering.id!);
+
+      emit(SuccessfullDelete());
 
       _waterings.sort((a, b) => a.date.compareTo(b.date));
       emit(WateringsLoadedState(_waterings));

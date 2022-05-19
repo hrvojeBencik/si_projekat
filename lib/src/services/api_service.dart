@@ -235,4 +235,12 @@ class ApiService {
       return [];
     }
   }
+
+  Future<void> deleteInstanceById(String endpoint, String instanceId) async {
+    try {
+      await _dio.delete(baseUrl + endpoint + '/$instanceId');
+    } catch (e) {
+      log('Api Service getAllYieldsByPlot exception: ${e.toString()}');
+    }
+  }
 }

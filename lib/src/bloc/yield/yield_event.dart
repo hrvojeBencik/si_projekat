@@ -19,4 +19,8 @@ class AddYieldEvent extends YieldEvent {
   const AddYieldEvent(this.y);
 }
 
-class RemoveYieldEvent extends YieldEvent {}
+class RemoveYieldEvent extends YieldEvent {
+  final Yield y;
+
+  const RemoveYieldEvent(this.y);
+}

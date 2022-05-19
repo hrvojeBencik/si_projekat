@@ -19,4 +19,8 @@ class AddSupplementationEvent extends SupplementationEvent {
   const AddSupplementationEvent(this.supplementation);
 }
 
-class RemoveSupplementationEvent extends SupplementationEvent {}
+class RemoveSupplementationEvent extends SupplementationEvent {
+  final Supplementation supplementation;
+
+  const RemoveSupplementationEvent(this.supplementation);
+}
