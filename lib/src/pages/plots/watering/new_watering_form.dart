@@ -7,10 +7,11 @@ import 'package:si_app/src/models/watering.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 
 class NewWateringForm extends StatefulWidget {
-  const NewWateringForm({Key? key, required this.closeForm, required this.plotId}) : super(key: key);
+  const NewWateringForm({Key? key, required this.closeForm, required this.plotId, required this.bloc}) : super(key: key);
 
   final Function() closeForm;
   final String plotId;
+  final WateringBloc bloc;
 
   @override
   State<NewWateringForm> createState() => _NewWateringFormState();
@@ -62,7 +63,7 @@ class _NewWateringFormState extends State<NewWateringForm> {
                     type: _wateringType,
                     comment: _commentController.text,
                   );
-                  context.read<WateringBloc>().add(AddWateringEvent(_watering));
+                  widget.bloc.add(AddWateringEvent(_watering));
                 },
           icon: const Icon(
             Icons.check,

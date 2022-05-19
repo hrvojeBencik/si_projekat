@@ -8,10 +8,11 @@ import 'package:si_app/src/models/supplementation.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 
 class NewSupplementationForm extends StatefulWidget {
-  const NewSupplementationForm({Key? key, required this.closeForm, required this.plotId}) : super(key: key);
+  const NewSupplementationForm({Key? key, required this.closeForm, required this.plotId, required this.bloc}) : super(key: key);
 
   final Function() closeForm;
   final String plotId;
+  final SupplementationBloc bloc;
 
   @override
   State<NewSupplementationForm> createState() => _NewSupplementationFormState();
@@ -76,7 +77,7 @@ class _NewSupplementationFormState extends State<NewSupplementationForm> {
                         type: _supplementationType,
                         comment: _commentController.text,
                       );
-                      context.read<SupplementationBloc>().add(AddSupplementationEvent(_supplementation));
+                      widget.bloc.add(AddSupplementationEvent(_supplementation));
                     },
               icon: const Icon(
                 Icons.check,

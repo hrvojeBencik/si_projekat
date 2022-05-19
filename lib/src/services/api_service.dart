@@ -8,6 +8,7 @@ import 'package:si_app/src/models/supplementation.dart';
 import 'package:si_app/src/models/tillage.dart';
 import 'package:si_app/src/models/user.dart';
 import 'package:si_app/src/models/watering.dart';
+import 'package:si_app/src/models/yield.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 
 class ApiService {
@@ -200,6 +201,37 @@ class ApiService {
       return _supplementations;
     } catch (e) {
       log('Api Service getAllSupplementationsByPlot exception: ${e.toString()}');
+      return [];
+    }
+  }
+
+  Future<Yield?> addNewYield(Yield y) async {
+    try {
+      var response = await _dio.post(
+        baseUrl + yieldEndpoint,
+        data: json.encode(y.toJson()),
+      );
+
+      Yield _yield = Yield.fromJson(response.data);
+
+      return _yield;
+    } catch (e) {
+      log('Api Service addNewYield exception: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<List<Yield>> getYieldsByPlot(String plotId) async {
+    try {
+      var response = await _dio.get(
+        baseUrl + yieldEndpoint + '/plot/$plotId',
+      );
+
+      List<Yield> _yields = getYieldsFromJson(response.data);
+
+      return _yields;
+    } catch (e) {
+      log('Api Service getAllYieldsByPlot exception: ${e.toString()}');
       return [];
     }
   }

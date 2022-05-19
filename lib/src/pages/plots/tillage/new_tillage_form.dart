@@ -8,10 +8,11 @@ import 'package:si_app/src/models/tillage.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 
 class NewTillageForm extends StatefulWidget {
-  const NewTillageForm({Key? key, required this.closeForm, required this.plotId}) : super(key: key);
+  const NewTillageForm({Key? key, required this.closeForm, required this.plotId, required this.bloc}) : super(key: key);
 
   final Function() closeForm;
   final String plotId;
+  final TillageBloc bloc;
 
   @override
   State<NewTillageForm> createState() => _NewTillageFormState();
@@ -68,7 +69,7 @@ class _NewTillageFormState extends State<NewTillageForm> {
                     type: _tillageType,
                     comment: _commentController.text,
                   );
-                  context.read<TillageBloc>().add(AddTillageEvent(_tillage));
+                  widget.bloc.add(AddTillageEvent(_tillage));
                 },
           icon: const Icon(
             Icons.check,

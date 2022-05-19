@@ -3,21 +3,21 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:si_app/src/constants/colors.dart';
-import 'package:si_app/src/constants/mock_data.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/pages/plots/care/care_evidence.dart';
 import 'package:si_app/src/pages/plots/supplementation/supplementation_evidence.dart';
 import 'package:si_app/src/pages/plots/tillage/tillage_evidence.dart';
 import 'package:si_app/src/pages/plots/watering/watering_evidence.dart';
+import 'package:si_app/src/pages/plots/yield/yield_evidence.dart';
 import 'package:si_app/src/widgets/fructify_footer.dart';
 
 class PlotPage extends StatefulWidget {
-  // const PlotPage({Key? key, required this.plot}) : super(key: key);
-  PlotPage({Key? key}) : super(key: key);
+  const PlotPage({Key? key, required this.plot}) : super(key: key);
+  // PlotPage({Key? key}) : super(key: key);
 
-  // final Plot plot;
-  final Plot plot = MockData.plot;
+  final Plot plot;
+  // final Plot plot = MockData.plot;
 
   @override
   State<PlotPage> createState() => _PlotPageState();
@@ -60,7 +60,7 @@ class _PlotPageState extends State<PlotPage> {
           child: Column(
             children: [
               _header(),
-              // _map(),
+              _map(),
               _customDivider(),
               TillageEvidence(
                 plotId: widget.plot.id!,
@@ -77,6 +77,8 @@ class _PlotPageState extends State<PlotPage> {
               SupplementationEvidence(
                 plotId: widget.plot.id!,
               ),
+              _customDivider(),
+              YieldEvidence(plotId: widget.plot.id!),
               const SizedBox(height: 50),
               FructifyFooter(context: context),
             ],

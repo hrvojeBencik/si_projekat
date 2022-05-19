@@ -10,6 +10,7 @@ import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
 import 'package:si_app/src/bloc/supplementation/supplementation_bloc.dart';
 import 'package:si_app/src/bloc/tillage/tillage_bloc.dart';
 import 'package:si_app/src/bloc/watering/watering_bloc.dart';
+import 'package:si_app/src/bloc/yield/yield_bloc.dart';
 import 'package:si_app/src/constants/routes.dart';
 import 'package:si_app/src/pages/home_page.dart';
 import 'package:si_app/src/pages/landing_page/landing_page.dart';
@@ -42,26 +43,6 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<PlotsBloc>(
             create: (context) => PlotsBloc(
-              context.read<ApiService>(),
-            ),
-          ),
-          BlocProvider<TillageBloc>(
-            create: (context) => TillageBloc(
-              context.read<ApiService>(),
-            ),
-          ),
-          BlocProvider<WateringBloc>(
-            create: (context) => WateringBloc(
-              context.read<ApiService>(),
-            ),
-          ),
-          BlocProvider<CareBloc>(
-            create: (context) => CareBloc(
-              context.read<ApiService>(),
-            ),
-          ),
-          BlocProvider<SupplementationBloc>(
-            create: (context) => SupplementationBloc(
               context.read<ApiService>(),
             ),
           ),

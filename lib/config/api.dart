@@ -5,3 +5,4 @@ const tillageEndpoint = '/tillage';
 const wateringEndpoint = '/watering';
 const careEndpoint = '/care';
 const supplementationEndpoint = '/supplementation';
+const yieldEndpoint = '/yield';

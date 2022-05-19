@@ -28,7 +28,7 @@
     "supplementation": "Prihrana biljaka",
     "tillage": "Obrada zamljišta",
     "watering": "Navodnjavanje zamljišta",
-    "yield": "Prinos",
+    "yield": "Prihodi i rashodi",
     "tillageTypeHint": "Tip obrade(npr. Freziranje)",
     "tillageDate": "Datum obrade",
     "comment": "Komentar",
@@ -45,5 +45,13 @@
     "newSupplementationSuccessAdd": "Uspešno ste dodali evidenciju o prihrani voćnjaka.",
     "newSupplementationError": "Greška prilikom dodavanja evidencije o prihrani voćnjaka.",
     "supplementationTypeHint": "Tip prihrane(npr. Urea)",
-    "supplementationQuantityHint": "Količina(npr. 0.1kg po stablu)"
+    "supplementationQuantityHint": "Količina(npr. 0.1kg po stablu)",
+    "expense": "Rashod",
+    "income": "Prihod",
+    "amountHint": "Iznos(npr. 5000 RSD)",
+    "yieldHint": "Količina roda(npr. 5 tona)",
+    "yieldAmount": "Količina roda",
+    "expenseCommentHint": "Komentar(npr. Troskovi radne snage)",
+    "newYieldSuccessAdd": "Uspešno ste dodali evidenciju o prihodima i rashodima voćnjaka.",
+    "newYieldError": "Greška prilikom dodavanja evidencije o prihodima i rashodima voćnjaka."
 }

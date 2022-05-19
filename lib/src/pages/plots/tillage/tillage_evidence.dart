@@ -6,8 +6,9 @@ import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/pages/plots/tillage/new_tillage_form.dart';
 import 'package:si_app/src/pages/plots/tillage/tillage_tile.dart';
+import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/utils/toast.dart';
-import 'package:si_app/src/widgets/fructify_loader.dart';
+import 'package:si_app/src/widgets/fructify_vertical_loader.dart';
 
 class TillageEvidence extends StatefulWidget {
   const TillageEvidence({Key? key, required this.plotId}) : super(key: key);
@@ -19,7 +20,7 @@ class TillageEvidence extends StatefulWidget {
 }
 
 class _TillageEvidenceState extends State<TillageEvidence> {
-  late final TillageBloc _bloc = context.read<TillageBloc>()..add(LoadTillagesEvent(widget.plotId));
+  late final TillageBloc _bloc = TillageBloc(ApiService())..add(LoadTillagesEvent(widget.plotId));
   late final AppLocalizations _localization = AppLocalizations.of(context)!;
   bool _isAddingNewOpen = false;
 
@@ -43,7 +44,9 @@ class _TillageEvidenceState extends State<TillageEvidence> {
       },
       builder: (context, state) {
         if (state is LoadingTillagesState) {
-          return _loadingTillages();
+          return FructifyVerticalLoader(
+            title: _localization.tillage,
+          );
         }
 
         if (state is TillagesLoadedState) {
@@ -55,6 +58,7 @@ class _TillageEvidenceState extends State<TillageEvidence> {
                 NewTillageForm(
                   closeForm: () => setState(() => _isAddingNewOpen = false),
                   plotId: widget.plotId,
+                  bloc: _bloc,
                 ),
               // Tillage Tiles
               ...state.tillages.map((e) => TillageTile(tillage: e)).toList()
@@ -64,17 +68,6 @@ class _TillageEvidenceState extends State<TillageEvidence> {
 
         return Text(_localization.genericErrorMessage, style: FructifyStyles.textStyle.errorMessageStyle);
       },
-    );
-  }
-
-  Column _loadingTillages() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_localization.tillage, style: FructifyStyles.textStyle.headerStyle3),
-        const SizedBox(height: 20),
-        const SizedBox(width: 300, child: FructifyLoader.vertical()),
-      ],
     );
   }
 

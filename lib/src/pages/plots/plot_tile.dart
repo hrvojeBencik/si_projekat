@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
+import 'package:si_app/src/pages/plots/plot_page.dart';
 
 class PlotTile extends StatelessWidget {
   const PlotTile({Key? key, required this.plot}) : super(key: key);
@@ -21,7 +22,7 @@ class PlotTile extends StatelessWidget {
           overlayColor: MaterialStateProperty.all<Color>(FructifyColors.whiteGreen),
           onTap: () {
             // Go to plot screen
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => PlotPage(plot: plot)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PlotPage(plot: plot)));
           },
           child: Padding(
             padding: const EdgeInsets.all(20),

@@ -1,52 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:si_app/src/bloc/care/care_bloc.dart';
+import 'package:si_app/src/bloc/yield/yield_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:si_app/src/models/care.dart';
+import 'package:si_app/src/models/yield.dart';
 import 'package:si_app/src/services/authentication/user_repository.dart';
 
-class NewCareForm extends StatefulWidget {
-  const NewCareForm({Key? key, required this.closeForm, required this.plotId, required this.bloc}) : super(key: key);
+class NewYieldForm extends StatefulWidget {
+  const NewYieldForm({Key? key, required this.closeForm, required this.plotId, required this.bloc}) : super(key: key);
 
   final Function() closeForm;
   final String plotId;
-  final CareBloc bloc;
+  final YieldBloc bloc;
 
   @override
-  State<NewCareForm> createState() => _NewCareFormState();
+  State<NewYieldForm> createState() => _NewYieldFormState();
 }
 
-class _NewCareFormState extends State<NewCareForm> {
+class _NewYieldFormState extends State<NewYieldForm> {
   late final AppLocalizations _localization = AppLocalizations.of(context)!;
   DateTime? _selectedDate = DateTime.now();
-  final TextEditingController _typeController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
-  final TextEditingController _quantityController = TextEditingController();
-  String _careType = '';
-  String _quantity = '';
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _yieldController = TextEditingController();
+  YieldType _yieldType = YieldType.expense;
+  String _amount = '';
+  String _yieldAmount = '';
 
   @override
   void initState() {
     super.initState();
-    _typeController.addListener(() {
+    _amountController.addListener(() {
       setState(() {
-        _careType = _typeController.text;
+        _amount = _amountController.text;
       });
     });
-    _quantityController.addListener(() {
+
+    _yieldController.addListener(() {
       setState(() {
-        _quantity = _quantityController.text;
+        _yieldAmount = _yieldController.text;
       });
     });
   }
 
   @override
   void dispose() {
-    _typeController.dispose();
     _commentController.dispose();
-    _quantityController.dispose();
+    _amountController.dispose();
+    _yieldController.dispose();
     super.dispose();
   }
 
@@ -56,28 +58,32 @@ class _NewCareFormState extends State<NewCareForm> {
       children: [
         Row(
           children: [
-            Expanded(child: _inputField(_typeController, _localization.careTypeHint + '*')),
+            Expanded(child: _yieldTypeDropdown()),
             const SizedBox(width: 20),
-            Expanded(child: _inputField(_quantityController, _localization.careQuantityHint + '*')),
+            Expanded(child: _inputField(_amountController, _localization.amountHint + '*')),
             const SizedBox(width: 20),
-            Expanded(
-              child: _dateField(),
-            ),
+            if (_yieldType == YieldType.expense)
+              Expanded(
+                child: _dateField(),
+              )
+            else
+              Expanded(child: _inputField(_yieldController, _localization.yieldHint + '*')),
             const SizedBox(width: 20),
             IconButton(
-              onPressed: _careType == '' || _selectedDate == null || _quantity == ''
+              onPressed: _amount == '' || _selectedDate == null || (_yieldType == YieldType.income && _yieldAmount == '')
                   ? null
                   : () {
                       widget.closeForm();
-                      final Care _care = Care(
+                      final Yield _yield = Yield(
                         plotId: widget.plotId,
                         userFirebaseId: context.read<UserRepository>().getFirebaseId(),
                         date: _selectedDate!,
-                        quantity: _quantity,
-                        type: _careType,
+                        amount: _yieldType == YieldType.income ? _yieldAmount : '',
+                        income: _yieldType == YieldType.income ? _amount : '',
+                        expense: _yieldType == YieldType.expense ? _amount : '',
                         comment: _commentController.text,
                       );
-                      widget.bloc.add(AddCareEvent(_care));
+                      widget.bloc.add(AddYieldEvent(_yield));
                     },
               icon: const Icon(
                 Icons.check,
@@ -95,8 +101,47 @@ class _NewCareFormState extends State<NewCareForm> {
           ],
         ),
         const SizedBox(height: 10),
-        _inputField(_commentController, _localization.comment, capitalization: TextCapitalization.sentences),
+        Row(
+          children: [
+            if (_yieldType == YieldType.income)
+              Expanded(
+                child: _dateField(),
+              ),
+            Expanded(child: _inputField(_commentController, _yieldType == YieldType.expense ? _localization.expenseCommentHint : _localization.comment, capitalization: TextCapitalization.sentences)),
+          ],
+        ),
       ],
+    );
+  }
+
+  Widget _yieldTypeDropdown() {
+    return DropdownButton<YieldType>(
+      value: _yieldType,
+      items: [
+        DropdownMenuItem(
+          child: Text(
+            _localization.expense + '*',
+            style: const TextStyle(
+              color: FructifyColors.lightGreen,
+            ),
+          ),
+          value: YieldType.expense,
+        ),
+        DropdownMenuItem(
+          child: Text(
+            _localization.income + '*',
+            style: const TextStyle(
+              color: FructifyColors.lightGreen,
+            ),
+          ),
+          value: YieldType.income,
+        ),
+      ],
+      onChanged: (value) {
+        setState(() {
+          _yieldType = value!;
+        });
+      },
     );
   }
 

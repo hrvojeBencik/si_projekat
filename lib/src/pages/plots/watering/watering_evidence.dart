@@ -6,8 +6,9 @@ import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/pages/plots/watering/new_watering_form.dart';
 import 'package:si_app/src/pages/plots/watering/watering_tile.dart';
+import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/utils/toast.dart';
-import 'package:si_app/src/widgets/fructify_loader.dart';
+import 'package:si_app/src/widgets/fructify_vertical_loader.dart';
 
 class WateringEvidence extends StatefulWidget {
   const WateringEvidence({Key? key, required this.plotId}) : super(key: key);
@@ -19,7 +20,7 @@ class WateringEvidence extends StatefulWidget {
 }
 
 class _WateringEvidenceState extends State<WateringEvidence> {
-  late final WateringBloc _bloc = context.read<WateringBloc>()..add(LoadWateringsEvent(widget.plotId));
+  late final WateringBloc _bloc = WateringBloc(ApiService())..add(LoadWateringsEvent(widget.plotId));
   late final AppLocalizations _localization = AppLocalizations.of(context)!;
   bool _isAddingNewOpen = false;
 
@@ -43,7 +44,9 @@ class _WateringEvidenceState extends State<WateringEvidence> {
       },
       builder: (context, state) {
         if (state is LoadingWateringsState) {
-          return _loadingWaterings();
+          return FructifyVerticalLoader(
+            title: _localization.watering,
+          );
         }
 
         if (state is WateringsLoadedState) {
@@ -55,6 +58,7 @@ class _WateringEvidenceState extends State<WateringEvidence> {
                 NewWateringForm(
                   closeForm: () => setState(() => _isAddingNewOpen = false),
                   plotId: widget.plotId,
+                  bloc: _bloc,
                 ),
               ...state.waterings.map((e) => WateringTile(watering: e)).toList(),
             ],
@@ -63,17 +67,6 @@ class _WateringEvidenceState extends State<WateringEvidence> {
 
         return Text(_localization.genericErrorMessage, style: FructifyStyles.textStyle.errorMessageStyle);
       },
-    );
-  }
-
-  Column _loadingWaterings() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_localization.watering, style: FructifyStyles.textStyle.headerStyle3),
-        const SizedBox(height: 20),
-        const SizedBox(width: 300, child: FructifyLoader.vertical()),
-      ],
     );
   }
 

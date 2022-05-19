@@ -1,66 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:si_app/src/bloc/supplementation/supplementation_bloc.dart';
+import 'package:si_app/src/bloc/yield/yield_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
-import 'package:si_app/src/pages/plots/supplementation/new_supplementation_form.dart';
-import 'package:si_app/src/pages/plots/supplementation/supplementation_tile.dart';
+import 'package:si_app/src/pages/plots/yield/new_yield_form.dart';
+import 'package:si_app/src/pages/plots/yield/yield_tile.dart';
 import 'package:si_app/src/services/api_service.dart';
 import 'package:si_app/src/utils/toast.dart';
 import 'package:si_app/src/widgets/fructify_vertical_loader.dart';
 
-class SupplementationEvidence extends StatefulWidget {
-  const SupplementationEvidence({Key? key, required this.plotId}) : super(key: key);
+class YieldEvidence extends StatefulWidget {
+  const YieldEvidence({Key? key, required this.plotId}) : super(key: key);
 
   final String plotId;
 
   @override
-  State<SupplementationEvidence> createState() => _SupplementationEvidenceState();
+  State<YieldEvidence> createState() => _YieldEvidenceState();
 }
 
-class _SupplementationEvidenceState extends State<SupplementationEvidence> {
-  late final SupplementationBloc _bloc = SupplementationBloc(ApiService())..add(LoadSupplementationsEvent(widget.plotId));
+class _YieldEvidenceState extends State<YieldEvidence> {
+  late final YieldBloc _bloc = YieldBloc(ApiService())..add(LoadYieldsEvent(widget.plotId));
   late final AppLocalizations _localization = AppLocalizations.of(context)!;
   bool _isAddingNewOpen = false;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SupplementationBloc, SupplementationState>(
+    return BlocConsumer<YieldBloc, YieldState>(
       bloc: _bloc,
       listener: (context, state) {
-        if (state is NewSupplementationSuccessfullyAddedState) {
+        if (state is NewYieldSuccessfullyAddedState) {
           displayToast(
-            message: _localization.newSupplementationSuccessAdd,
+            message: _localization.newYieldSuccessAdd,
           );
         }
 
-        if (state is NewSupplementationErrorState) {
+        if (state is NewYieldErrorState) {
           displayToast(
-            message: _localization.newSupplementationError,
+            message: _localization.newYieldError,
             color: FructifyColors.red,
           );
         }
       },
       builder: (context, state) {
-        if (state is LoadingSupplementationsState) {
+        if (state is LoadingYieldsState) {
           return FructifyVerticalLoader(
-            title: _localization.supplementation,
+            title: _localization.yield,
           );
         }
 
-        if (state is SupplementationsLoadedState) {
+        if (state is YieldsLoadedState) {
           return Column(
             children: [
               _headerRow(),
               const SizedBox(height: 10),
               if (_isAddingNewOpen)
-                NewSupplementationForm(
+                NewYieldForm(
                   closeForm: () => setState(() => _isAddingNewOpen = false),
                   plotId: widget.plotId,
                   bloc: _bloc,
                 ),
-              ...state.supplementations.map((e) => SupplementationTile(supplementation: e)).toList()
+              ...state.yields.map((e) => YieldTile(yield: e)).toList()
             ],
           );
         }
@@ -74,7 +74,7 @@ class _SupplementationEvidenceState extends State<SupplementationEvidence> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(_localization.supplementation, style: FructifyStyles.textStyle.headerStyle3),
+        Text(_localization.yield, style: FructifyStyles.textStyle.headerStyle3),
         if (!_isAddingNewOpen)
           IconButton(
             onPressed: () => setState(() => _isAddingNewOpen = true),
