@@ -1,7 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
@@ -104,6 +106,19 @@ class _PlotPageState extends State<PlotPage> {
             widget.plot.name,
             style: FructifyStyles.textStyle.headerStyle2,
           ),
+          IconButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              context.read<PlotsBloc>().add(RemovePlotEvent(widget.plot));
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.delete,
+              size: 40,
+              color: FructifyColors.red,
+            ),
+          ),
+          const Spacer(),
           IconButton(
             padding: EdgeInsets.zero,
             onPressed: () => Navigator.pop(context),

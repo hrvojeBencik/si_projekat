@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/services/api_service.dart';
 
@@ -29,6 +30,13 @@ class PlotsBloc extends Bloc<PlotsEvent, PlotsState> {
       await apiService.addNewPlot(event.plot);
 
       add(FetchPlotsEvent());
+    });
+
+    on<RemovePlotEvent>((event, emit) async {
+      await apiService.deleteInstanceById(plotsEndpoint, event.plot.id!);
+      plots.removeWhere((element) => element.id! == event.plot.id!);
+      emit(SuccessfulDelete());
+      emit(PlotsLoadedState(plots));
     });
   }
 

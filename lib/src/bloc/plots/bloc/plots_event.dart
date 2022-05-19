@@ -17,6 +17,12 @@ class AddNewPlotEvent extends PlotsEvent {
   const AddNewPlotEvent(this.plot);
 }
 
+class RemovePlotEvent extends PlotsEvent {
+  final Plot plot;
+
+  const RemovePlotEvent(this.plot);
+}
+
 class SubmitAddingNewPlotEvent extends PlotsEvent {}
 
 class CancelAddingNewPlotEvent extends PlotsEvent {}

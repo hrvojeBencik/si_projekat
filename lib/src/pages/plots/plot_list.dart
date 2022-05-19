@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
+import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/pages/plots/new_plot_form.dart';
 import 'package:si_app/src/pages/plots/plot_tile.dart';
@@ -27,6 +28,10 @@ class _PlotListState extends State<PlotList> {
       listener: (context, state) {
         if (state is SuccessfullyAddedPlotState) {
           displayToast(message: _localization.successfullyAddedPlot);
+        }
+
+        if (state is SuccessfulDelete) {
+          displayToast(message: _localization.successfulDelete, color: FructifyColors.red);
         }
       },
       builder: (context, state) {
