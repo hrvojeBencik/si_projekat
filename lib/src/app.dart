@@ -7,6 +7,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
 import 'package:si_app/src/bloc/care/care_bloc.dart';
 import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
+import 'package:si_app/src/bloc/supplementation/supplementation_bloc.dart';
 import 'package:si_app/src/bloc/tillage/tillage_bloc.dart';
 import 'package:si_app/src/bloc/watering/watering_bloc.dart';
 import 'package:si_app/src/constants/routes.dart';
@@ -56,6 +57,11 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<CareBloc>(
             create: (context) => CareBloc(
+              context.read<ApiService>(),
+            ),
+          ),
+          BlocProvider<SupplementationBloc>(
+            create: (context) => SupplementationBloc(
               context.read<ApiService>(),
             ),
           ),

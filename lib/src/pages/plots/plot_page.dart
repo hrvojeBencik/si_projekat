@@ -7,6 +7,7 @@ import 'package:si_app/src/constants/mock_data.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/pages/plots/care/care_evidence.dart';
+import 'package:si_app/src/pages/plots/supplementation/supplementation_evidence.dart';
 import 'package:si_app/src/pages/plots/tillage/tillage_evidence.dart';
 import 'package:si_app/src/pages/plots/watering/watering_evidence.dart';
 import 'package:si_app/src/widgets/fructify_footer.dart';
@@ -70,6 +71,10 @@ class _PlotPageState extends State<PlotPage> {
               ),
               _customDivider(),
               CareEvidence(
+                plotId: widget.plot.id!,
+              ),
+              _customDivider(),
+              SupplementationEvidence(
                 plotId: widget.plot.id!,
               ),
               const SizedBox(height: 50),

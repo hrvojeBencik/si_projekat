@@ -41,5 +41,9 @@
     "newCareSuccessAdd": "Uspešno ste dodali evidenciju o zaštiti voćnjaka.",
     "newCareError": "Greška prilikom dodavanja evidencije o zaštiti voćnjaka.",
     "careTypeHint": "Tip obrade(npr. Herbicidi)",
-    "careQuantityHint": "Količina(npr. 7l/ha)"
+    "careQuantityHint": "Količina(npr. 7l/ha)",
+    "newSupplementationSuccessAdd": "Uspešno ste dodali evidenciju o prihrani voćnjaka.",
+    "newSupplementationError": "Greška prilikom dodavanja evidencije o prihrani voćnjaka.",
+    "supplementationTypeHint": "Tip prihrane(npr. Urea)",
+    "supplementationQuantityHint": "Količina(npr. 0.1kg po stablu)"
 }

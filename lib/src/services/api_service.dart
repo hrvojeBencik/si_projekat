@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:si_app/config/api.dart';
 import 'package:si_app/src/models/care.dart';
 import 'package:si_app/src/models/plot.dart';
+import 'package:si_app/src/models/supplementation.dart';
 import 'package:si_app/src/models/tillage.dart';
 import 'package:si_app/src/models/user.dart';
 import 'package:si_app/src/models/watering.dart';
@@ -105,7 +106,7 @@ class ApiService {
 
       return _tillages;
     } catch (e) {
-      log('Api Service addNewTillage exception: ${e.toString()}');
+      log('Api Service getTillagesByPlot exception: ${e.toString()}');
       return [];
     }
   }
@@ -136,7 +137,7 @@ class ApiService {
 
       return _waterings;
     } catch (e) {
-      log('Api Service addNewWatering exception: ${e.toString()}');
+      log('Api Service getWateringsByPlot exception: ${e.toString()}');
       return [];
     }
   }
@@ -167,7 +168,38 @@ class ApiService {
 
       return _cares;
     } catch (e) {
-      log('Api Service addNewCare exception: ${e.toString()}');
+      log('Api Service getCaresByPlot exception: ${e.toString()}');
+      return [];
+    }
+  }
+
+  Future<Supplementation?> addNewSupplementation(Supplementation supplementation) async {
+    try {
+      var response = await _dio.post(
+        baseUrl + supplementationEndpoint,
+        data: json.encode(supplementation.toJson()),
+      );
+
+      Supplementation _supplementation = Supplementation.fromJson(response.data);
+
+      return _supplementation;
+    } catch (e) {
+      log('Api Service addNewSupplementation exception: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<List<Supplementation>> getSupplementationsByPlot(String plotId) async {
+    try {
+      var response = await _dio.get(
+        baseUrl + supplementationEndpoint + '/plot/$plotId',
+      );
+
+      List<Supplementation> _supplementations = getSupplementationsFromJson(response.data);
+
+      return _supplementations;
+    } catch (e) {
+      log('Api Service getAllSupplementationsByPlot exception: ${e.toString()}');
       return [];
     }
   }
