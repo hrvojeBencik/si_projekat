@@ -14,4 +14,15 @@ class FructifyTextStyles {
     fontSize: 36,
     fontWeight: FontWeight.bold,
   );
+
+  final TextStyle headerStyle3 = const TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
+
+  final TextStyle errorMessageStyle = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    color: Colors.red,
+  );
 }
