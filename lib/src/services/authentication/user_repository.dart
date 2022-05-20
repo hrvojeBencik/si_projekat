@@ -12,10 +12,14 @@ class UserRepository {
   }
 
   Future<UserCredential> signInWithCredentials(String email, String password) async {
-    return await _firebaseAuth.signInWithEmailAndPassword(
+    UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    getUser();
+
+    return userCredential;
   }
 
   Future<UserCredential> signUp({required String email, required String password, required String firstName, required String lastName, String image = ''}) async {
@@ -35,6 +39,15 @@ class UserRepository {
     currentUser = await ApiService().addUser(user);
 
     return userCredential;
+  }
+
+  bool checkIfVerified() {
+    _firebaseAuth.currentUser!.reload().then((value) => _firebaseAuth.currentUser!.emailVerified);
+    return _firebaseAuth.currentUser!.emailVerified;
+  }
+
+  Future<void> sendVerificationMail() async {
+    if (_firebaseAuth.currentUser != null) await _firebaseAuth.currentUser!.sendEmailVerification();
   }
 
   Future<void> signOut() async {

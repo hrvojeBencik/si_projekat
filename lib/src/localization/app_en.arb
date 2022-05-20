@@ -56,5 +56,9 @@
     "newYieldError": "Greška prilikom dodavanja evidencije o prihodima i rashodima voćnjaka.",
     "successfulDelete": "Uspešno brisanje",
     "successfullyAddedPlot": "Parcela uspešno sačuvana",
-    "logout": "Odjavi se"
+    "logout": "Odjavi se",
+    "successfulRegistration": "Uspešna registracija",
+    "successfulRegistrationMessage": "Tvoj nalog je uspešno kreiran. Neophodno je da proveriš svoj mejl i pronađeš aktivacioni link.",
+    "getNewVerificationMail": "Nisi dobio/la mail? Klikni na dugme ispod za ponovno slanje",
+    "sendAgain": "Pošalji ponovo"
 }

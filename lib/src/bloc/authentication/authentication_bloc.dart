@@ -13,7 +13,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     on<CheckUserStatusEvent>((event, emit) async {
       try {
         final isSignedIn = await userRepository.isSignedIn();
-        if (isSignedIn) {
+        if (isSignedIn && userRepository.checkIfVerified()) {
           final email = userRepository.getUser();
 
           emit(AuthenticatedState(email!));
@@ -35,7 +35,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
           image: event.image,
         );
 
-        emit(AuthenticatedState(userCredential.user!.email!));
+        await userRepository.sendVerificationMail();
+        emit(NotVerifiedEmailState());
+        // emit(AuthenticatedState(userCredential.user!.email!));
       } on FirebaseAuthException catch (e) {
         final AuthException authException = AuthException(code: e.code);
         emit(UnauthenticatedState());
@@ -50,7 +52,11 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       try {
         final UserCredential userCredential = await userRepository.signInWithCredentials(event.email, event.password);
 
-        emit(AuthenticatedState(userCredential.user!.email!));
+        if (userCredential.user!.emailVerified) {
+          emit(AuthenticatedState(userCredential.user!.email!));
+        } else {
+          emit(NotVerifiedEmailState());
+        }
       } on FirebaseAuthException catch (e) {
         final AuthException authException = AuthException(code: e.code);
         emit(UnauthenticatedState());
@@ -69,6 +75,14 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
     on<SwitchAuthFormEvent>((event, emit) {
       emit(UnauthenticatedState());
+    });
+
+    on<SendVerificationMailEvent>((event, emit) async {
+      await userRepository.sendVerificationMail();
+    });
+
+    on<GoToHomePageEvent>((event, emit) async {
+      emit(AuthenticatedState(userRepository.currentUser!.email));
     });
   }
 }

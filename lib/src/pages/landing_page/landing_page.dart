@@ -4,6 +4,7 @@ import 'package:si_app/src/bloc/authentication/authentication_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/pages/landing_page/login_form.dart';
 import 'package:si_app/src/pages/landing_page/register_form.dart';
+import 'package:si_app/src/pages/landing_page/verify_email.dart';
 import 'package:si_app/src/widgets/fructify_footer.dart';
 
 class LandingPage extends StatefulWidget {
@@ -32,10 +33,16 @@ class _LandingPageState extends State<LandingPage> {
         builder: (context, state) {
           if (state is UnauthenticatedState) {
             return _authForm(null);
+            // return _verifyEmail();
           }
 
           if (state is AuthenticationErrorState) {
             return _authForm(state.errorMessage);
+            // return _verifyEmail();
+          }
+
+          if (state is NotVerifiedEmailState) {
+            return _verifyEmail();
           }
 
           return Container();
@@ -64,6 +71,18 @@ class _LandingPageState extends State<LandingPage> {
               ],
             ),
           ),
+        ),
+      ],
+    );
+    //
+  }
+
+  Widget _verifyEmail() {
+    return Stack(
+      children: [
+        _authScreenBackground(),
+        Center(
+          child: VerifyEmail(),
         ),
       ],
     );
