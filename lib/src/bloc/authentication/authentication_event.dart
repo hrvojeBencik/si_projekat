@@ -35,3 +35,9 @@ class SignInEvent extends AuthenticationEvent {
 class SignOutEvent extends AuthenticationEvent {}
 
 class SwitchAuthFormEvent extends AuthenticationEvent {}
+
+class SendVerificationMailEvent extends AuthenticationEvent {}
+
+class GoToHomePageEvent extends AuthenticationEvent {}
+
+class ResetPasswordEvent extends AuthenticationEvent {}

@@ -12,6 +12,7 @@ import 'package:si_app/src/pages/plots/supplementation/supplementation_evidence.
 import 'package:si_app/src/pages/plots/tillage/tillage_evidence.dart';
 import 'package:si_app/src/pages/plots/watering/watering_evidence.dart';
 import 'package:si_app/src/pages/plots/yield/yield_evidence.dart';
+import 'package:si_app/src/widgets/custom_divider.dart';
 import 'package:si_app/src/widgets/fructify_footer.dart';
 
 class PlotPage extends StatefulWidget {
@@ -43,7 +44,17 @@ class _PlotPageState extends State<PlotPage> {
         geodesic: true,
       ),
     );
-    _initialCameraPosition = CameraPosition(target: widget.plot.coordinates.first, zoom: 20);
+
+    double latitude = 0.0;
+    double longitude = 0.0;
+    for (var item in widget.plot.coordinates) {
+      latitude += item.latitude;
+      longitude += item.longitude;
+    }
+
+    latitude /= widget.plot.coordinates.length;
+    longitude /= widget.plot.coordinates.length;
+    _initialCameraPosition = CameraPosition(target: LatLng(latitude, longitude), zoom: 18);
   }
 
   @override
@@ -60,29 +71,37 @@ class _PlotPageState extends State<PlotPage> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width > 1000 ? 200 : 10),
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width > 2000
+                  ? 600
+                  : size.width > 1650
+                      ? 400
+                      : size.width > 1000
+                          ? 200
+                          : 10,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _header(),
                 _map(),
-                _customDivider(),
+                const CustomDivider(),
                 TillageEvidence(
                   plotId: widget.plot.id!,
                 ),
-                _customDivider(),
+                const CustomDivider(),
                 WateringEvidence(
                   plotId: widget.plot.id!,
                 ),
-                _customDivider(),
+                const CustomDivider(),
                 CareEvidence(
                   plotId: widget.plot.id!,
                 ),
-                _customDivider(),
+                const CustomDivider(),
                 SupplementationEvidence(
                   plotId: widget.plot.id!,
                 ),
-                _customDivider(),
+                const CustomDivider(),
                 YieldEvidence(plotId: widget.plot.id!),
                 const SizedBox(height: 50),
                 FructifyFooter(context: context),
@@ -90,15 +109,6 @@ class _PlotPageState extends State<PlotPage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _customDivider() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Divider(
-        color: FructifyColors.lightGreen,
       ),
     );
   }

@@ -28,3 +28,7 @@ class AuthenticationErrorState extends AuthenticationState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+class NotVerifiedEmailState extends AuthenticationState {}
+
+class PasswordResetMailSentState extends AuthenticationState {}

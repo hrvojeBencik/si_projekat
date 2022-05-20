@@ -12,51 +12,58 @@ class PlotTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final CameraPosition _initialCameraPosition = CameraPosition(target: plot.coordinates.first, zoom: 30);
+    double latitude = 0.0;
+    double longitude = 0.0;
+    for (var item in plot.coordinates) {
+      latitude += item.latitude;
+      longitude += item.longitude;
+    }
 
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: size.width <= 1000 ? 10 : 200, vertical: 10),
-      child: Material(
-        color: Colors.white,
-        child: InkWell(
-          overlayColor: MaterialStateProperty.all<Color>(FructifyColors.whiteGreen),
-          onTap: () {
-            // Go to plot screen
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PlotPage(plot: plot)));
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                Container(
-                  width: size.width <= 1000 ? 180 : 300,
-                  height: size.width <= 1000 ? 90 : 150,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: GoogleMap(
-                      mapType: MapType.satellite,
-                      initialCameraPosition: _initialCameraPosition,
-                      zoomControlsEnabled: false,
-                      compassEnabled: false,
-                      mapToolbarEnabled: false,
-                      scrollGesturesEnabled: false,
-                      zoomGesturesEnabled: false,
-                      tiltGesturesEnabled: false,
-                      rotateGesturesEnabled: false,
-                      markers: {
-                        Marker(
-                          markerId: MarkerId(plot.name),
-                          position: plot.coordinates.first,
-                        ),
-                      },
-                    ),
+    latitude /= plot.coordinates.length;
+    longitude /= plot.coordinates.length;
+
+    final CameraPosition _initialCameraPosition = CameraPosition(target: LatLng(latitude, longitude), zoom: 17);
+
+    return Material(
+      color: Colors.white,
+      child: InkWell(
+        overlayColor: MaterialStateProperty.all<Color>(FructifyColors.whiteGreen),
+        onTap: () {
+          // Go to plot screen
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PlotPage(plot: plot)));
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Container(
+                width: size.width <= 1000 ? 180 : 300,
+                height: size.width <= 1000 ? 90 : 150,
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: GoogleMap(
+                    mapType: MapType.satellite,
+                    initialCameraPosition: _initialCameraPosition,
+                    zoomControlsEnabled: false,
+                    compassEnabled: false,
+                    mapToolbarEnabled: false,
+                    scrollGesturesEnabled: false,
+                    zoomGesturesEnabled: false,
+                    tiltGesturesEnabled: false,
+                    rotateGesturesEnabled: false,
+                    markers: {
+                      Marker(
+                        markerId: MarkerId(plot.name),
+                        position: LatLng(latitude, longitude),
+                      ),
+                    },
                   ),
                 ),
-                const SizedBox(width: 20),
-                Expanded(child: Text(plot.name, style: FructifyStyles.textStyle.headerStyle2)),
-              ],
-            ),
+              ),
+              const SizedBox(width: 20),
+              Expanded(child: Text(plot.name, style: FructifyStyles.textStyle.headerStyle2)),
+            ],
           ),
         ),
       ),
