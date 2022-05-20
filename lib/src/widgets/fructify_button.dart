@@ -40,7 +40,7 @@ class _FructifyButtonState extends State<FructifyButton> {
           padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(horizontal: 34, vertical: 20)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(200),
+              borderRadius: BorderRadius.circular(8),
               side: isHovering
                   ? BorderSide.none
                   : BorderSide(

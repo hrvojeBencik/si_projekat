@@ -36,7 +36,7 @@ class _NewPlotFormState extends State<NewPlotForm> {
   bool _serviceEnabled = false;
   late PermissionStatus _permissionStatus;
   LocationData? _locationData;
-  CameraPosition _initialCameraPosition = const CameraPosition(target: LatLng(45.521563, -122.677433), zoom: 10);
+  CameraPosition _initialCameraPosition = const CameraPosition(target: LatLng(45.521563, -122.677433), zoom: 20);
   MapStates _mapState = MapStates.loading;
   final Set<Marker> _markers = HashSet<Marker>();
   final Set<Polygon> _polygons = HashSet<Polygon>();
@@ -72,7 +72,7 @@ class _NewPlotFormState extends State<NewPlotForm> {
             _locationData!.latitude!,
             _locationData!.longitude!,
           ),
-          zoom: 30,
+          zoom: 18,
         );
       }
     });
@@ -100,7 +100,15 @@ class _NewPlotFormState extends State<NewPlotForm> {
     return Center(
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width > 1000 ? 200 : 10),
+          padding: EdgeInsets.symmetric(
+            horizontal: size.width > 2000
+                ? 600
+                : size.width > 1650
+                    ? 400
+                    : size.width > 1000
+                        ? 200
+                        : 10,
+          ),
           child: Column(
             children: [
               _heading(),
@@ -130,7 +138,38 @@ class _NewPlotFormState extends State<NewPlotForm> {
   Padding _heading() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Text(_localization.addPlot, style: FructifyStyles.textStyle.headerStyle2),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(_localization.addPlot, style: FructifyStyles.textStyle.headerStyle2),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _localization.addPlotPinsTutorialText,
+                        style: TextStyle(fontSize: 18, color: FructifyColors.darkGreen.withOpacity(0.6)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            padding: EdgeInsets.zero,
+            onPressed: () => widget.cancelForm(),
+            icon: const Icon(
+              Icons.close,
+              size: 40,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

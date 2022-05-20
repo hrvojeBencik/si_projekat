@@ -20,6 +20,11 @@ class FructifyTextStyles {
     fontWeight: FontWeight.bold,
   );
 
+  final TextStyle messageStyle = const TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.normal,
+  );
+
   final TextStyle errorMessageStyle = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w500,

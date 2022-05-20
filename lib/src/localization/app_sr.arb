@@ -19,7 +19,7 @@
     "home": "Početna",
     "settings": "Podešavanja",
     "plotLoadingError": "Greška prilikom učitavanja parcela",
-    "noAddedPlots": "Nemaš unetih parcela",
+    "noAddedPlots": "Nemaš sačuvanih parcela",
     "addPlot": "Dodaj parcelu",
     "cancel": "Poništi",
     "submit": "Potvrdi",
@@ -55,5 +55,16 @@
     "newYieldSuccessAdd": "Uspešno ste dodali evidenciju o prihodima i rashodima voćnjaka.",
     "newYieldError": "Greška prilikom dodavanja evidencije o prihodima i rashodima voćnjaka.",
     "successfulDelete": "Uspešno brisanje",
-    "successfullyAddedPlot": "Parcela uspešno sačuvana"
+    "successfullyAddedPlot": "Parcela uspešno sačuvana",
+    "logout": "Odjavi se",
+    "successfulRegistration": "Uspešna registracija",
+    "successfulRegistrationMessage": "Tvoj nalog je uspešno kreiran. Neophodno\nje da proveriš svoj mejl i pronađeš\naktivacioni link.",
+    "getNewVerificationMail": "Nisi dobio/la mail? Klikni na\ndugme ispod za ponovno slanje",
+    "sendAgain": "Pošalji ponovo",
+    "saveChanges": "Sačuvaj promene",
+    "resetPassword": "Resetuj lozinku",
+    "resetPasswordMailSent": "Mejl sa linkom za promenu lozinke je poslat",
+    "profileChangesSaved": "Izmene profila su sačuvane",
+    "addPlotPinsTutorialText": "Klikom na mapu dodajte ćoškove vaše parcele,\nda biste mogli sačuvati parcelu morate imati minimum 3 postavljene tačke i upisano ime.",
+    "savedPlots": "Sačuvane parcele"
 }

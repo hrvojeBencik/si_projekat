@@ -240,7 +240,20 @@ class ApiService {
     try {
       await _dio.delete(baseUrl + endpoint + '/$instanceId');
     } catch (e) {
-      log('Api Service getAllYieldsByPlot exception: ${e.toString()}');
+      log('Api Service deleteINstanceById exception: ${e.toString()}');
+    }
+  }
+
+  Future<void> updateUser(Map<String, dynamic> userData, String userId) async {
+    try {
+      await _dio.patch(
+        baseUrl + userEndpoint + '/$userId',
+        data: json.encode(
+          userData,
+        ),
+      );
+    } catch (e) {
+      log('Api Service updateUser exception: ${e.toString()}');
     }
   }
 }

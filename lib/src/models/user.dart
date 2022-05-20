@@ -4,7 +4,7 @@ class User {
   final String firstName;
   final String lastName;
   final String email;
-  final String? image;
+  String? image;
 
   User({
     this.id,
@@ -15,9 +15,11 @@ class User {
     this.image,
   });
 
+  set setImage(String image) => this.image = image;
+
   factory User.fromJson(Map<String, dynamic> data) {
     return User(
-      id: data['id'],
+      id: data['_id'],
       firebaseId: data['firebaseId'],
       firstName: data['firstName'],
       lastName: data['lastName'],

@@ -24,6 +24,7 @@ class _NewTillageFormState extends State<NewTillageForm> {
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
   String _tillageType = '';
+  late Size size;
 
   @override
   void initState() {
@@ -36,6 +37,12 @@ class _NewTillageFormState extends State<NewTillageForm> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    size = MediaQuery.of(context).size;
+  }
+
+  @override
   void dispose() {
     _typeController.dispose();
     _commentController.dispose();
@@ -44,46 +51,52 @@ class _NewTillageFormState extends State<NewTillageForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Expanded(child: _typeField()),
-        const SizedBox(width: 20),
-        Expanded(
-          child: _commentField(),
+        Row(
+          children: [
+            Expanded(child: _typeField()),
+            const SizedBox(width: 20),
+            if (size.width > 1000)
+              Expanded(
+                child: _commentField(),
+              ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: _dateField(),
+            ),
+            const SizedBox(width: 20),
+            IconButton(
+              onPressed: _tillageType == '' || _selectedDate == null
+                  ? null
+                  : () {
+                      widget.closeForm();
+                      final Tillage _tillage = Tillage(
+                        plotId: widget.plotId,
+                        userFirebaseId: context.read<UserRepository>().getFirebaseId(),
+                        date: _selectedDate!,
+                        quantity: '',
+                        type: _tillageType,
+                        comment: _commentController.text,
+                      );
+                      widget.bloc.add(AddTillageEvent(_tillage));
+                    },
+              icon: const Icon(
+                Icons.check,
+                color: FructifyColors.lightGreen,
+              ),
+            ),
+            const SizedBox(width: 20),
+            IconButton(
+              onPressed: widget.closeForm,
+              icon: const Icon(
+                Icons.close,
+                color: FructifyColors.red,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 20),
-        Expanded(
-          child: _dateField(),
-        ),
-        const SizedBox(width: 20),
-        IconButton(
-          onPressed: _tillageType == '' || _selectedDate == null
-              ? null
-              : () {
-                  widget.closeForm();
-                  final Tillage _tillage = Tillage(
-                    plotId: widget.plotId,
-                    userFirebaseId: context.read<UserRepository>().getFirebaseId(),
-                    date: _selectedDate!,
-                    quantity: '',
-                    type: _tillageType,
-                    comment: _commentController.text,
-                  );
-                  widget.bloc.add(AddTillageEvent(_tillage));
-                },
-          icon: const Icon(
-            Icons.check,
-            color: FructifyColors.lightGreen,
-          ),
-        ),
-        const SizedBox(width: 20),
-        IconButton(
-          onPressed: widget.closeForm,
-          icon: const Icon(
-            Icons.close,
-            color: FructifyColors.red,
-          ),
-        ),
+        if (size.width < 1000) _commentField(),
       ],
     );
   }

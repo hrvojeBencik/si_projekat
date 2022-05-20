@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
+import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
 import 'package:si_app/src/pages/plots/new_plot_form.dart';
 import 'package:si_app/src/pages/plots/plot_tile.dart';
@@ -57,21 +58,45 @@ class _PlotListState extends State<PlotList> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(_localization.noAddedPlots),
-            _openNewPlotFormButton(),
+            const Icon(
+              Icons.location_off_outlined,
+              color: FructifyColors.lightGreen,
+              size: 50,
+            ),
+            Text(_localization.noAddedPlots, style: FructifyStyles.textStyle.headerStyle3),
             const SizedBox(height: 20),
+            _openNewPlotFormButton(),
           ],
         ),
       );
     }
 
-    return Center(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width > 2000
+              ? 600
+              : MediaQuery.of(context).size.width > 1650
+                  ? 400
+                  : MediaQuery.of(context).size.width > 1000
+                      ? 200
+                      : 10,
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+              child: Text(
+                _localization.savedPlots,
+                style: FructifyStyles.textStyle.headerStyle2,
+              ),
+            ),
             ...plots.map((e) => PlotTile(plot: e)).toList(),
-            _openNewPlotFormButton(),
+            Align(
+              alignment: Alignment.center,
+              child: _openNewPlotFormButton(),
+            ),
             const SizedBox(height: 20),
           ],
         ),
