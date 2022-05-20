@@ -26,7 +26,7 @@ class PlotPage extends StatefulWidget {
 }
 
 class _PlotPageState extends State<PlotPage> {
-  late Size size = MediaQuery.of(context).size;
+  late Size size;
   final Set<Polygon> _polygons = HashSet<Polygon>();
   late final CameraPosition _initialCameraPosition;
 
@@ -47,6 +47,12 @@ class _PlotPageState extends State<PlotPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    size = MediaQuery.of(context).size;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
@@ -56,6 +62,7 @@ class _PlotPageState extends State<PlotPage> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width > 1000 ? 200 : 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _header(),
                 _map(),

@@ -26,6 +26,7 @@ class _NewSupplementationFormState extends State<NewSupplementationForm> {
   final TextEditingController _quantityController = TextEditingController();
   String _supplementationType = '';
   String _quantity = '';
+  late Size size;
 
   @override
   void initState() {
@@ -40,6 +41,12 @@ class _NewSupplementationFormState extends State<NewSupplementationForm> {
         _quantity = _quantityController.text;
       });
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    size = MediaQuery.of(context).size;
   }
 
   @override
@@ -60,9 +67,10 @@ class _NewSupplementationFormState extends State<NewSupplementationForm> {
             const SizedBox(width: 20),
             Expanded(child: _inputField(_quantityController, _localization.supplementationQuantityHint + '*')),
             const SizedBox(width: 20),
-            Expanded(
-              child: _dateField(),
-            ),
+            if (size.width > 1000)
+              Expanded(
+                child: _dateField(),
+              ),
             const SizedBox(width: 20),
             IconButton(
               onPressed: _supplementationType == '' || _selectedDate == null || _quantity == ''
@@ -95,7 +103,15 @@ class _NewSupplementationFormState extends State<NewSupplementationForm> {
           ],
         ),
         const SizedBox(height: 10),
-        _inputField(_commentController, _localization.comment, capitalization: TextCapitalization.sentences),
+        Row(
+          children: [
+            if (size.width < 1000)
+              Expanded(
+                child: _dateField(),
+              ),
+            Expanded(child: _inputField(_commentController, _localization.comment, capitalization: TextCapitalization.sentences)),
+          ],
+        ),
       ],
     );
   }

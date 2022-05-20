@@ -55,5 +55,6 @@
     "newYieldSuccessAdd": "Uspešno ste dodali evidenciju o prihodima i rashodima voćnjaka.",
     "newYieldError": "Greška prilikom dodavanja evidencije o prihodima i rashodima voćnjaka.",
     "successfulDelete": "Uspešno brisanje",
-    "successfullyAddedPlot": "Parcela uspešno sačuvana"
+    "successfullyAddedPlot": "Parcela uspešno sačuvana",
+    "logout": "Odjavi se"
 }
