@@ -48,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
         ),
         decoration: BoxDecoration(
           color: FructifyColors.white,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
               offset: const Offset(15, 15),
@@ -84,7 +84,7 @@ class _LoginFormState extends State<LoginForm> {
         ),
         decoration: BoxDecoration(
           color: FructifyColors.white,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
               offset: const Offset(15, 15),
@@ -169,26 +169,17 @@ class _LoginFormState extends State<LoginForm> {
               hintText: AppLocalizations.of(context)!.email,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: FructifyColors.black),
-                borderRadius: BorderRadius.circular(200),
+                borderRadius: BorderRadius.circular(8),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: FructifyColors.black),
-                borderRadius: BorderRadius.circular(200),
+                borderRadius: BorderRadius.circular(8),
               ),
-              prefixIcon: Container(
-                margin: const EdgeInsets.only(right: 10),
-                width: 66,
-                height: 55,
-                decoration: const BoxDecoration(
+              prefixIcon: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Icon(
+                  Icons.person_outline,
                   color: FructifyColors.lightGreen,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(200),
-                    bottomLeft: Radius.circular(200),
-                  ),
-                ),
-                child: const Icon(
-                  Icons.person,
-                  color: FructifyColors.white,
                   size: 32,
                 ),
               ),
@@ -209,26 +200,17 @@ class _LoginFormState extends State<LoginForm> {
               hintText: AppLocalizations.of(context)!.password,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: FructifyColors.black),
-                borderRadius: BorderRadius.circular(200),
+                borderRadius: BorderRadius.circular(8),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: FructifyColors.black),
-                borderRadius: BorderRadius.circular(200),
+                borderRadius: BorderRadius.circular(8),
               ),
-              prefixIcon: Container(
-                margin: const EdgeInsets.only(right: 10),
-                width: 66,
-                height: 55,
-                decoration: const BoxDecoration(
+              prefixIcon: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Icon(
+                  Icons.lock_outline,
                   color: FructifyColors.lightGreen,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(200),
-                    bottomLeft: Radius.circular(200),
-                  ),
-                ),
-                child: const Icon(
-                  Icons.lock,
-                  color: FructifyColors.white,
                   size: 32,
                 ),
               ),

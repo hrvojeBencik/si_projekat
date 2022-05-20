@@ -26,6 +26,7 @@ class _NewCareFormState extends State<NewCareForm> {
   final TextEditingController _quantityController = TextEditingController();
   String _careType = '';
   String _quantity = '';
+  late Size size;
 
   @override
   void initState() {
@@ -40,6 +41,12 @@ class _NewCareFormState extends State<NewCareForm> {
         _quantity = _quantityController.text;
       });
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    size = MediaQuery.of(context).size;
   }
 
   @override
@@ -60,9 +67,10 @@ class _NewCareFormState extends State<NewCareForm> {
             const SizedBox(width: 20),
             Expanded(child: _inputField(_quantityController, _localization.careQuantityHint + '*')),
             const SizedBox(width: 20),
-            Expanded(
-              child: _dateField(),
-            ),
+            if (size.width > 1000)
+              Expanded(
+                child: _dateField(),
+              ),
             const SizedBox(width: 20),
             IconButton(
               onPressed: _careType == '' || _selectedDate == null || _quantity == ''
@@ -95,7 +103,15 @@ class _NewCareFormState extends State<NewCareForm> {
           ],
         ),
         const SizedBox(height: 10),
-        _inputField(_commentController, _localization.comment, capitalization: TextCapitalization.sentences),
+        Row(
+          children: [
+            if (size.width < 1000)
+              Expanded(
+                child: _dateField(),
+              ),
+            Expanded(child: _inputField(_commentController, _localization.comment, capitalization: TextCapitalization.sentences)),
+          ],
+        ),
       ],
     );
   }

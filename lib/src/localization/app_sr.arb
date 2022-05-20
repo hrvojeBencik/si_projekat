@@ -19,7 +19,7 @@
     "home": "Početna",
     "settings": "Podešavanja",
     "plotLoadingError": "Greška prilikom učitavanja parcela",
-    "noAddedPlots": "Nemaš unetih parcela",
+    "noAddedPlots": "Nemaš sačuvanih parcela",
     "addPlot": "Dodaj parcelu",
     "cancel": "Poništi",
     "submit": "Potvrdi",
@@ -55,5 +55,6 @@
     "newYieldSuccessAdd": "Uspešno ste dodali evidenciju o prihodima i rashodima voćnjaka.",
     "newYieldError": "Greška prilikom dodavanja evidencije o prihodima i rashodima voćnjaka.",
     "successfulDelete": "Uspešno brisanje",
-    "successfullyAddedPlot": "Parcela uspešno sačuvana"
+    "successfullyAddedPlot": "Parcela uspešno sačuvana",
+    "logout": "Odjavi se"
 }

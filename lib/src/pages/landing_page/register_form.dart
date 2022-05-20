@@ -56,7 +56,7 @@ class _RegisterFormState extends State<RegisterForm> {
         ),
         decoration: BoxDecoration(
           color: FructifyColors.white,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
               offset: const Offset(15, 15),
@@ -328,11 +328,11 @@ class _RegisterFormState extends State<RegisterForm> {
           contentPadding: const EdgeInsets.only(left: 30, top: 24, bottom: 16),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: FructifyColors.black),
-            borderRadius: BorderRadius.circular(200),
+            borderRadius: BorderRadius.circular(8),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: FructifyColors.black),
-            borderRadius: BorderRadius.circular(200),
+            borderRadius: BorderRadius.circular(8),
           ),
         ),
       ),
