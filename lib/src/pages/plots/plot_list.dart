@@ -72,13 +72,34 @@ class _PlotListState extends State<PlotList> {
     }
 
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ...plots.map((e) => PlotTile(plot: e)).toList(),
-          _openNewPlotFormButton(),
-          const SizedBox(height: 20),
-        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width > 2000
+              ? 600
+              : MediaQuery.of(context).size.width > 1650
+                  ? 400
+                  : MediaQuery.of(context).size.width > 1000
+                      ? 200
+                      : 10,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+              child: Text(
+                _localization.savedPlots,
+                style: FructifyStyles.textStyle.headerStyle2,
+              ),
+            ),
+            ...plots.map((e) => PlotTile(plot: e)).toList(),
+            Align(
+              alignment: Alignment.center,
+              child: _openNewPlotFormButton(),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

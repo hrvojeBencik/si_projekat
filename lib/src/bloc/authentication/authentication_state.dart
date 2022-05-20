@@ -30,3 +30,5 @@ class AuthenticationErrorState extends AuthenticationState {
 }
 
 class NotVerifiedEmailState extends AuthenticationState {}
+
+class PasswordResetMailSentState extends AuthenticationState {}

@@ -14,7 +14,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       try {
         final isSignedIn = await userRepository.isSignedIn();
         if (isSignedIn && userRepository.checkIfVerified()) {
-          final email = userRepository.getUser();
+          final email = userRepository.getCurrentUserEmail();
 
           emit(AuthenticatedState(email!));
         } else {
@@ -27,7 +27,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
     on<RegisterEvent>((event, emit) async {
       try {
-        final UserCredential userCredential = await userRepository.signUp(
+        await userRepository.signUp(
           email: event.email,
           password: event.password,
           firstName: event.firstName,
@@ -37,7 +37,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
         await userRepository.sendVerificationMail();
         emit(NotVerifiedEmailState());
-        // emit(AuthenticatedState(userCredential.user!.email!));
       } on FirebaseAuthException catch (e) {
         final AuthException authException = AuthException(code: e.code);
         emit(UnauthenticatedState());
@@ -82,6 +81,12 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     });
 
     on<GoToHomePageEvent>((event, emit) async {
+      emit(AuthenticatedState(userRepository.currentUser!.email));
+    });
+
+    on<ResetPasswordEvent>((event, emit) async {
+      await userRepository.resetPassword();
+      emit(PasswordResetMailSentState());
       emit(AuthenticatedState(userRepository.currentUser!.email));
     });
   }

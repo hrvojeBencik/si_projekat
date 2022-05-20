@@ -17,7 +17,7 @@ class UserRepository {
       password: password,
     );
 
-    getUser();
+    await getCurrentUser();
 
     return userCredential;
   }
@@ -33,7 +33,7 @@ class UserRepository {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      image: image,
+      image: null,
     );
 
     currentUser = await ApiService().addUser(user);
@@ -60,7 +60,7 @@ class UserRepository {
     return _currentUser != null;
   }
 
-  String? getUser() {
+  String? getCurrentUserEmail() {
     final _currentUser = _firebaseAuth.currentUser;
     if (_currentUser != null) {
       ApiService().getUserByFirebaseId(_currentUser.uid).then((value) => currentUser = value);
@@ -70,7 +70,21 @@ class UserRepository {
     }
   }
 
+  Future<user_model.User?> getCurrentUser() async {
+    final _currentUser = _firebaseAuth.currentUser;
+    if (_currentUser != null) {
+      currentUser = await ApiService().getUserByFirebaseId(_currentUser.uid);
+      return currentUser!;
+    }
+
+    return null;
+  }
+
   String getFirebaseId() {
     return _firebaseAuth.currentUser!.uid;
+  }
+
+  Future<void> resetPassword() async {
+    await _firebaseAuth.sendPasswordResetEmail(email: currentUser!.email);
   }
 }

@@ -60,5 +60,11 @@
     "successfulRegistration": "Uspešna registracija",
     "successfulRegistrationMessage": "Tvoj nalog je uspešno kreiran. Neophodno\nje da proveriš svoj mejl i pronađeš\naktivacioni link.",
     "getNewVerificationMail": "Nisi dobio/la mail? Klikni na\ndugme ispod za ponovno slanje",
-    "sendAgain": "Pošalji ponovo"
+    "sendAgain": "Pošalji ponovo",
+    "saveChanges": "Sačuvaj promene",
+    "resetPassword": "Resetuj lozinku",
+    "resetPasswordMailSent": "Mejl sa linkom za promenu lozinke je poslat",
+    "profileChangesSaved": "Izmene profila su sačuvane",
+    "addPlotPinsTutorialText": "Klikom na mapu dodajte ćoškove vaše parcele,\nda biste mogli sačuvati parcelu morate imati minimum 3 postavljene tačke i upisano ime.",
+    "savedPlots": "Sačuvane parcele"
 }

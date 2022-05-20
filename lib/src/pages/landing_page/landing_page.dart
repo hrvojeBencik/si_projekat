@@ -81,7 +81,7 @@ class _LandingPageState extends State<LandingPage> {
     return Stack(
       children: [
         _authScreenBackground(),
-        Center(
+        const Center(
           child: VerifyEmail(),
         ),
       ],
