@@ -7,13 +7,18 @@ import 'package:si_app/src/bloc/plots/bloc/plots_bloc.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/models/plot.dart';
+import 'package:si_app/src/models/weather.dart';
 import 'package:si_app/src/pages/plots/care/care_evidence.dart';
 import 'package:si_app/src/pages/plots/supplementation/supplementation_evidence.dart';
 import 'package:si_app/src/pages/plots/tillage/tillage_evidence.dart';
 import 'package:si_app/src/pages/plots/watering/watering_evidence.dart';
+import 'package:si_app/src/pages/plots/weather_widget.dart';
 import 'package:si_app/src/pages/plots/yield/yield_evidence.dart';
+import 'package:si_app/src/services/weather_service.dart';
 import 'package:si_app/src/widgets/custom_divider.dart';
 import 'package:si_app/src/widgets/fructify_footer.dart';
+import 'package:si_app/src/widgets/fructify_loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlotPage extends StatefulWidget {
   const PlotPage({Key? key, required this.plot}) : super(key: key);
@@ -27,9 +32,12 @@ class PlotPage extends StatefulWidget {
 }
 
 class _PlotPageState extends State<PlotPage> {
+  final WeatherService _weatherService = WeatherService();
   late Size size;
   final Set<Polygon> _polygons = HashSet<Polygon>();
   late final CameraPosition _initialCameraPosition;
+  late final LatLng _middleOfPlot;
+  late Future<Weather?> getCurrentWeather = _weatherService.getCurrentWeatherByCoordinates(_middleOfPlot);
 
   @override
   void initState() {
@@ -54,6 +62,7 @@ class _PlotPageState extends State<PlotPage> {
 
     latitude /= widget.plot.coordinates.length;
     longitude /= widget.plot.coordinates.length;
+    _middleOfPlot = LatLng(latitude, longitude);
     _initialCameraPosition = CameraPosition(target: LatLng(latitude, longitude), zoom: 18);
   }
 
@@ -84,7 +93,20 @@ class _PlotPageState extends State<PlotPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _header(),
-                _map(),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: _map(),
+                    ),
+                    if (size.width > 1400) Expanded(flex: 1, child: _weather()),
+                  ],
+                ),
+                if (size.width < 1400)
+                  Align(
+                    alignment: Alignment.center,
+                    child: _weather(),
+                  ),
                 const CustomDivider(),
                 TillageEvidence(
                   plotId: widget.plot.id!,
@@ -163,6 +185,37 @@ class _PlotPageState extends State<PlotPage> {
           mapType: MapType.satellite,
         ),
       ),
+    );
+  }
+
+  Widget _weather() {
+    return FutureBuilder<Weather?>(
+      future: getCurrentWeather,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const FructifyLoader();
+        }
+
+        if (snapshot.data == null) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                AppLocalizations.of(context)!.weatherLoadError,
+                style: FructifyStyles.textStyle.errorMessageStyle,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+
+        return WeatherWidget(
+          weather: snapshot.data!,
+          reloadWeather: () {
+            getCurrentWeather = _weatherService.getCurrentWeatherByCoordinates(_middleOfPlot);
+          },
+        );
+      },
     );
   }
 }
