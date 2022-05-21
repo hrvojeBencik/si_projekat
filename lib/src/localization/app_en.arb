@@ -66,5 +66,7 @@
     "resetPasswordMailSent": "Mejl sa linkom za promenu lozinke je poslat",
     "profileChangesSaved": "Izmene profila su sačuvane",
     "addPlotPinsTutorialText": "Klikom na mapu dodajte ćoškove vaše parcele, da biste mogli sačuvati parcelu morate imati minimum 3 postavljene tačke i upisano ime.",
-    "savedPlots": "Sačuvane parcele"
+    "savedPlots": "Sačuvane parcele",
+    "weatherLoadError": "Greška prilikom učitavanja trenutnih meteoroloških uslova.",
+    "reload": "Osveži"
 }
