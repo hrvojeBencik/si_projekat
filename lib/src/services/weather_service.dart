@@ -7,7 +7,7 @@ import 'package:si_app/src/models/weather.dart';
 class WeatherService {
   static const String _apiKey = 'c26ac3f1fef3d0acaa004b405fe4b107';
   static const String _baseUrl = 'https://api.openweathermap.org/data/2.5';
-  static const String _weatherIconUrl = 'http://openweathermap.org/img/w/';
+  static const String _weatherIconUrl = 'https://openweathermap.org/img/w/';
   static const String _pngExtension = '.png';
   static const String _weatherEndpoint = '/weather';
   static const String _forecast = '/forecast';
