@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
           builder: (BuildContext context, Widget? child) {
             return OKToast(
               child: MaterialApp(
-                scrollBehavior: MyCustomScrollBehavior(),
                 restorationScopeId: 'app',
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
