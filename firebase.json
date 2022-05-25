@@ -1,6 +1,6 @@
 {
     "hosting": {
-        "site": "agro-si-project",
+        "site": "fructify",
         "public": "build/web",
         "ignore": [
             "firebase.json",
