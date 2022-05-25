@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/widgets/fructify_button.dart';
+import 'package:si_app/src/widgets/fructify_loader.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key, this.errorMessage, required this.switchForm}) : super(key: key);
@@ -19,6 +20,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -223,12 +226,18 @@ class _LoginFormState extends State<LoginForm> {
             style: const TextStyle(color: Colors.red),
           ),
         const SizedBox(height: 20),
-        FructifyButton(
-          text: AppLocalizations.of(context)!.signIn,
-          onClick: () async {
-            context.read<AuthenticationBloc>().add(SignInEvent(_emailController.text, _passwordController.text));
-          },
-        ),
+        if (!_isLoading)
+          FructifyButton(
+            text: AppLocalizations.of(context)!.signIn,
+            onClick: () {
+              setState(() {
+                _isLoading = true;
+              });
+              context.read<AuthenticationBloc>().add(SignInEvent(_emailController.text, _passwordController.text));
+            },
+          )
+        else
+          const FructifyLoader(),
       ],
     );
   }

@@ -70,5 +70,6 @@
     "weatherLoadError": "Greška prilikom učitavanja trenutnih meteoroloških uslova.",
     "reload": "Osveži",
     "humidity": "Vlažnost vazduha:",
-    "pressure": "Pritisak:"
+    "pressure": "Pritisak:",
+    "passwordsMustMatch": "Lozinke se moraju poklapati"
 }

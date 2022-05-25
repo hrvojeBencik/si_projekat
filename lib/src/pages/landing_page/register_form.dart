@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:si_app/src/constants/colors.dart';
 import 'package:si_app/src/constants/styles.dart';
 import 'package:si_app/src/widgets/fructify_button.dart';
+import 'package:si_app/src/widgets/fructify_loader.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key, this.errorMessage, required this.switchForm}) : super(key: key);
@@ -23,7 +24,10 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
+  String? _errorMessage;
+
   bool _isTermsChecked = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -149,22 +153,36 @@ class _RegisterFormState extends State<RegisterForm> {
               ],
             ),
             const SizedBox(height: 20),
-            FructifyButton(
-              text: AppLocalizations.of(context)!.register,
-              onClick: !_formValidator()
-                  ? null
-                  : () {
-                      context.read<AuthenticationBloc>().add(
-                            RegisterEvent(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                              firstName: _firstNameController.text,
-                              lastName: _lastNameController.text,
-                              image: '',
-                            ),
-                          );
-                    },
-            )
+            if (!_isLoading)
+              FructifyButton(
+                text: AppLocalizations.of(context)!.register,
+                onClick: !_formValidator()
+                    ? null
+                    : () {
+                        if (_confirmPasswordController.text != _passwordController.text) {
+                          setState(() {
+                            _errorMessage = AppLocalizations.of(context)!.passwordsMustMatch;
+                          });
+                          return;
+                        }
+
+                        setState(() {
+                          _isLoading = true;
+                          _errorMessage = null;
+                        });
+                        context.read<AuthenticationBloc>().add(
+                              RegisterEvent(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                firstName: _firstNameController.text,
+                                lastName: _lastNameController.text,
+                                image: '',
+                              ),
+                            );
+                      },
+              )
+            else
+              const FructifyLoader(),
           ],
         ),
       ),
@@ -258,22 +276,35 @@ class _RegisterFormState extends State<RegisterForm> {
               ],
             ),
             const SizedBox(height: 20),
-            FructifyButton(
-              text: AppLocalizations.of(context)!.register,
-              onClick: !_formValidator()
-                  ? null
-                  : () {
-                      context.read<AuthenticationBloc>().add(
-                            RegisterEvent(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                              firstName: _firstNameController.text,
-                              lastName: _lastNameController.text,
-                              image: '',
-                            ),
-                          );
-                    },
-            ),
+            if (!_isLoading)
+              FructifyButton(
+                text: AppLocalizations.of(context)!.register,
+                onClick: !_formValidator()
+                    ? null
+                    : () {
+                        if (_confirmPasswordController.text != _passwordController.text) {
+                          setState(() {
+                            _errorMessage = AppLocalizations.of(context)!.passwordsMustMatch;
+                          });
+                          return;
+                        }
+                        setState(() {
+                          _isLoading = true;
+                          _errorMessage = null;
+                        });
+                        context.read<AuthenticationBloc>().add(
+                              RegisterEvent(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                firstName: _firstNameController.text,
+                                lastName: _lastNameController.text,
+                                image: '',
+                              ),
+                            );
+                      },
+              )
+            else
+              const FructifyLoader(),
             const SizedBox(height: 30),
             Text(
               AppLocalizations.of(context)!.alreadyHaveAccount,
@@ -304,9 +335,9 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   Widget _showErrorMessage() {
-    if (widget.errorMessage != null) {
+    if (widget.errorMessage != null || _errorMessage != null) {
       return Text(
-        widget.errorMessage!,
+        widget.errorMessage ?? _errorMessage!,
         style: const TextStyle(color: Colors.red),
       );
     }

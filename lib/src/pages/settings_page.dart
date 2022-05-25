@@ -30,6 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   String? _selectedImage;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -88,7 +89,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           child: InkWell(
                             onTap: () async {
                               final ImagePicker _picker = ImagePicker();
-                              final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                              final XFile? image = await _picker.pickImage(
+                                source: ImageSource.gallery,
+                                imageQuality: 50,
+                              );
                               if (image != null) {
                                 Uint8List bytes = await image.readAsBytes();
                                 setState(() {
@@ -115,6 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       child: Image.memory(
                                         base64Decode(_selectedImage!),
                                         fit: BoxFit.cover,
+                                        gaplessPlayback: true,
                                       ),
                                     ),
                             ),
@@ -156,18 +161,26 @@ class _SettingsPageState extends State<SettingsPage> {
                         const SizedBox(height: 20),
                         Align(
                           alignment: Alignment.center,
-                          child: FructifyButton(
-                            text: AppLocalizations.of(context)!.saveChanges,
-                            onClick: () {
-                              final userData = {
-                                'firstName': _firstNameController.text,
-                                'lastName': _lastNameController.text,
-                                'image': _selectedImage,
-                              };
-                              context.read<ApiService>().updateUser(userData, snapshot.data!.firebaseId);
-                              displayToast(message: AppLocalizations.of(context)!.profileChangesSaved);
-                            },
-                          ),
+                          child: !_isLoading
+                              ? FructifyButton(
+                                  text: AppLocalizations.of(context)!.saveChanges,
+                                  onClick: () async {
+                                    setState(() {
+                                      _isLoading = true;
+                                    });
+                                    final userData = {
+                                      'firstName': _firstNameController.text,
+                                      'lastName': _lastNameController.text,
+                                      'image': _selectedImage,
+                                    };
+                                    await context.read<ApiService>().updateUser(userData, snapshot.data!.firebaseId);
+                                    displayToast(message: AppLocalizations.of(context)!.profileChangesSaved);
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                  },
+                                )
+                              : const FructifyLoader(),
                         )
                       ],
                     );
